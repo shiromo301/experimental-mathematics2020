@@ -1,0 +1,49 @@
+from math import sqrt          # sqrt 関数を使うために必要
+from program2_1 import Dvector
+
+N = 6
+
+def main():
+    global N
+
+    # ベクトルの定義, 配列 a の添字は1～N
+    a = Dvector(1, N)
+    for i in range(1, N+1):
+        a[i] = (10 - i) / 20.0 * (-1.0) ** i
+    for i in range(1, N+1):
+        print(f"a[{i}]={a[i]}")
+    
+    print(f"ベクトル a の1ノルムは{vector_norm1( a )}です")
+    print(f"ベクトル a の2ノルムは{vector_norm2( a )}です")
+    print(f"ベクトル a の最大値ノルムは{vector_norm_max( a )}です")
+
+
+# 1ノルムの計算
+def vector_norm1(a: Dvector):
+    norm = 0.0
+    for i in range(a.head_idx, a.last_idx+1):
+        norm += abs(a[i])
+    return norm
+
+
+# 2ノルムの計算
+def vector_norm2(a: Dvector):
+    norm = 0.0
+    for i in range(a.head_idx, a.last_idx+1):
+        norm += a[i] ** 2
+    norm = sqrt(norm)
+    return norm
+
+
+# 最大値ノルムの計算 a[m...n]
+def vector_norm_max(a: Dvector):
+    m, n = a.head_idx, a.last_idx
+
+    for i in range(m, n+1):
+        a[i] = abs(a[i])
+
+    return max(a)
+
+
+if __name__ == "__main__":
+    main()
