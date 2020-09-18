@@ -11,6 +11,8 @@ EPS  = 10.0 ** -8.0 # epsilon の設定
 KMAX = 100          # 最大反復回数
 
 def main():
+    omega = 1.22
+
     a = Dmatrix(1, N, 1, N) # 行列 a[1...N][1...N]
     b = Dvector(1, N)       # b[1...N]
     x = Dvector(1, N)       # x[1...N]
@@ -21,7 +23,7 @@ def main():
             input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
             input_vector( b, 'b', fin, fout ) # ベクトル b の入出力
             input_vector( x, 'x', fin, fout ) # 初期ベクトル x0 の入出力
-            x = jacobi_lin( a, b, x )         # ヤコビ法
+            x = sor( a, b, x, omega )         # SOR法
 
             # 結果の出力
             fout.write("Ax=b の解は次の通りです\n")
@@ -29,25 +31,40 @@ def main():
                 fout.write("{:.6f}\n".format(x[i]))
 
 
-# ヤコビ法
-def jacobi_lin(a: Dmatrix, b: Dvector, x: Dvector) -> Dvector:
+# SOR法
+def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
     k = 0
 
-    xn = Dvector(1, N) # xn[1...N]
+    xo = Dvector(1, N) # xo[1...N]
 
-    # x <- x_k, xn <- x_{k+1}
     while True:
+        # xo <- x_k, x <- x_{k+1}
         for i in range(1, N+1):
-            xn[i] = b[i]
-            for j in range(1, N+1):
-                xn[i] -= a[i][j] * x[j]
-            xn[i] += a[i][i] * x[i]  # 余分に引いた分を加える
-            xn[i] /= a[i][i]
+            xo[i] = x[i]        # x_k に x_(k+1) を代入
+        
+        # i=1 の処理
+        t = 0.0
+        for j in range(2, N+1):
+            t += a[i][j] * xo[j]
+        x[1] = ( b[1] - t ) / a[1][1]
+
+        # i=2,3,...N の処理
+        for i in range(2, N+1):
+            s, t = 0.0, 0.0
+            for j in range(1, i):
+                s += a[i][j] * x[j]  # i-1列までの和
+            for j in range(i+1, N+1):
+                t += a[i][j] * xo[j] # i+1列以降の和
+            x[i] = ( b[i] - s - t ) / a[i][i]
+        # ここまではガウス・ザイデル法と同じ
+
+        # SOR法
         for i in range(1, N+1):
-            x[i] = xn[i] - x[i]
-        eps = vector_norm_max(x)     # 最大値ノルムの計算
+            x[i] = xo[i] + omega * ( x[i] - xo[i] ) # 補正
+        
         for i in range(1, N+1):
-            x[i] = xn[i]             # 値を更新
+            xo[i] = xo[i] - x[i]
+        eps = vector_norm_max(xo)
         k += 1
 
         if eps <= EPS or k >= KMAX:
@@ -56,9 +73,8 @@ def jacobi_lin(a: Dmatrix, b: Dvector, x: Dvector) -> Dvector:
     if k == KMAX:
         print("答えが見つかりませんでした")
     else:
-        print(f"反復回数は{k}回です")
-
-    return x
+        print(f"反復回数は{k}回です")      # 反復回数を画面に表示
+        return x
 
 
 if __name__ == "__main__":
