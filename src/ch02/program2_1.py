@@ -22,6 +22,7 @@ class Dvector(object):
             raise IndexError("Index out of range")
         self.vector[key - self.head_idx] = value
 
+
 def main():
     global N
     a = Dvector(1, N) # 配列 a の添字は 1～N
