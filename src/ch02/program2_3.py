@@ -15,7 +15,7 @@ def main():
 # a[1...N][1...N] の入力
 def input_matrix(a: Dmatrix, c: str, fin, fout):
     rhi, rli = a.row_head_idx, a.row_last_idx
-    chi, hli = a.col_head_idx, a.col_last_idx
+    chi, cli = a.col_head_idx, a.col_last_idx
     N = rli - rhi + 1
     fout.write(f"行列{c}は次の通りです\n")
     for i in range(rhi, rli+1):
