@@ -14,7 +14,7 @@ def main():
 
 # a[1...N][1...N] の入力
 def input_matrix(a: Dmatrix, c: str, fin, fout):
-    global N
+    N = a.row_last_idx - a.row_head_idx + 1
     fout.write(f"行列{c}は次の通りです\n")
     for i in range(1, N+1):
         line = fin.readline().split()
@@ -26,12 +26,13 @@ def input_matrix(a: Dmatrix, c: str, fin, fout):
 
 # b[1...N] の入力
 def input_vector(b: Dvector, c: str, fin, fout):
-    global N
+    N = b.last_idx - b.head_idx + 1
     fout.write(f"ベクトル{c}は次の通りです\n")
     line = fin.readline().split()
     for i in range(1, N+1):
         b[i] = float(line[i-1])
         fout.write("{:5.2f}\t\n".format(b[i]))
+    fin.readline()
 
 
 if __name__ == "__main__":
