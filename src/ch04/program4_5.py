@@ -1,10 +1,11 @@
 import sys
-sys.path.append("../")
+sys.path.append("../ch02")
+sys.path.append("../ch03/program3_2")
 
-from ch02.program2_1 import Dvector
-from ch02.program2_2 import Dmatrix
-from ch02.program2_8 import vector_norm1
-from ch03.program3_2 import gauss
+from program2_1 import Dvector
+from program2_2 import Dmatrix
+from program2_8 import vector_norm1
+from program3_2 import gauss
 
 EPS  = 10.0 ** -8.0 # epsilon の設定
 KMAX = 100          # 最大反復回数
