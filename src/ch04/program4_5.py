@@ -1,3 +1,6 @@
+# TODO: program3_2がインポートできない問題を修正
+# 上が修正できても出力が合わない可能性あり
+
 import sys
 sys.path.append("../ch02")
 sys.path.append("../ch03/program3_2")

@@ -1,0 +1,86 @@
+from typing import List
+
+N   = 6      # 求める桁数 5*(N+1) 桁
+DEG = 100000 # 桁数の基準
+
+def main():
+    x = [2, 12345, 99999, 33333, 44444, 55555, 66666]
+    y = [1, 45678, 88888, 90000, 88888, 77777, 66666]
+
+    print("x = ", end="")
+    print_result(x)
+    print("y = ", end="")
+    print_result(y)
+    z = adds(x, y)
+    print("x+y=", end="\t")
+    print_result(z)
+    z = subs(x, y)
+    print("x-y=", end="\t")
+    print_result(z)
+    z = muls(x, 9999)
+    print("x*9999=", end="\t")
+    print_result(z)
+    z = divs(x, 9999)
+    print("x/9999=", end="\t")
+    print_result(z)
+
+
+def adds(x: List[int], y: List[int], N: int = N, DEG:int = DEG) -> List[int]:
+    # 加算
+    z, up = [0] * len(x), 0
+    for i in range(N, -1, -1):
+        sum_ = x[i] + y[i] + up
+        if sum_ > DEG - 1:
+            z[i] = sum_ - DEG
+            up = 1
+        else:
+            z[i] = sum_
+            up = 0
+    return z
+
+
+def subs(x: List[int], y: List[int], N: int = N, DEG: int = DEG) -> List[int]:
+    # 減算
+    z, borrow = [0]*len(x), 0
+    for i in range(N, -1, -1):
+        sub = x[i] - y[i] - borrow
+        if sub >= 0:
+            z[i]   = sub
+            borrow = 0
+        else:
+            z[i]   = DEG + sub
+            borrow = 1
+    return z
+
+
+def muls(x: List[int], n: int) -> List[int]:
+    global N, DEG
+    # 乗算
+    z, up = [0]*len(x), 0
+    for i in range(N, -1, -1):
+        prod = x[i] * n + up
+        z[i] = prod % DEG
+        up   = prod / DEG
+    return z
+
+
+def divs(x: List[int], n: int) -> List[int]:
+    global N, DEG
+    # 除算
+    z, amari = [0]*len(x), 0
+    for i in range(N+1):
+        bunshi = amari * DEG + x[i]
+        z[i]   = bunshi / n
+        amari  = bunshi % n
+    return z
+
+
+def print_result(x: List[int]) -> None:
+    global N
+    for i in range(N+1):
+        print("%05u" % x[i], end=" ")
+    print()
+
+
+if __name__ == "__main__":
+    main()

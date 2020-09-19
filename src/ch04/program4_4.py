@@ -1,3 +1,5 @@
+# TODO: 出力がテキストと異なるバグを修正
+
 from math import cos
 
 EPS  = 10.0 ** -8.0 # epsilon の設定

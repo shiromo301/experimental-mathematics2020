@@ -80,6 +80,7 @@ def cg(a: Dmatrix, b: Dvector, x: Dvector):
 
 # 行列 a[1...N][1...N] と ベクトルb[1...N] との積
 def matrix_vector_product(a: Dmatrix, b: Dvector):
+    N = b.last_idx - b.head_idx + 1
     c = Dvector(1, N)
 
     for i in range(1, N+1):
