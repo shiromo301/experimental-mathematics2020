@@ -1,3 +1,5 @@
+# TODO: テキストと出力結果が異なるバグを修正
+
 import sys
 sys.path.append("../ch02")
 
