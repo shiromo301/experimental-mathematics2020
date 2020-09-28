@@ -20,48 +20,38 @@ def main():
         with open("output_cho.dat", "w") as fout:
             input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
             input_vector( b, 'b', fin, fout ) # ベクトル b の入出力
-            a = cholesky_decomp( a )          # 修正コレスキー分解
-            b = cholesky_solve( a, b )        # 前進代入・後退代入
+            a_cd = cholesky_decomp( a )          # 修正コレスキー分解
+            b_cs = cholesky_solve( a_cd, b )        # 前進代入・後退代入
 
             # 結果の出力
             fout.write("Ax=bの解は次の通りです\n")
             for i in range(1, N+1):
-                fout.write(f"{b[i]}\t\n")
+                fout.write(f"{b_cs[i]}\t\n")
 
 
 # 修正コレスキー分解
-def cholesky_decomp(a: Dmatrix):
+def cholesky_decomp(a: Dmatrix, N:int=N):
+    a_cd = a.copy()
     for i in range(2, N+1):
         for j in range(1, i):
-            tmp = 0.0
-            for k in range(1, j):
-                tmp += a[i][k] * a[k][k] * a[j][k]
-            a[i][j] = (a[i][j] - tmp) / a[j][j]
-        tmp = 0.0
-        for k in range(1, j):
-            tmp += a[i][k] * a[i][k] * a[k][k]
-        a[i][i] = a[i][i] - tmp
-    return a
+            a_cd[i][j] = (a[i][j] - sum((a[i][k] * a[k][k] * a[j][k] for k in range(1,j)))) / a[j][j]
+        a_cd[i][i] = a[i][i] - sum((a[i][k] * a[i][k] * a[k][k] for k in range(1,j)))
+    return a_cd
 
 
 # 修正コレスキー分解を利用して連立一次方程式を解く
-def cholesky_solve(a: Dmatrix, b: Dvector):
+def cholesky_solve(a_cd: Dmatrix, b: Dvector, N:int=N):
+    b_cs = b.copy()
     # LDy = b
-    b[1] = b[1] / a[1][1]
+    b_cs[1] = b[1] / a_cd[1][1]
     for i in range(2, N+1):
-        tmp = 0.0
-        for j in range(1, i):
-            tmp += a[j][j] * a[i][j] * b[j]
-        b[i] = ( b[i] - tmp ) / a[i][i]
+        b_cs[i] = ( b[i] - sum( ( a_cd[j][j] * a_cd[i][j] * b[j] for j in range(1,i) ) ) ) / a_cd[i][i]
 
     # L^t x = y
     for i in range(N-1, 0, -1):
-        tmp = 0.0
-        for j in range(i+1, N+1):
-            tmp += a[j][i] * b[j]
-        b[i] = b[i] - tmp
+        b_cs[i] -= sum( ( a_cd[j][i] * b_cs[j] for j in range(i+1,N+1) ) )
 
-    return b
+    return b_cs
 
 
 if __name__ == "__main__":
