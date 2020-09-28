@@ -3,7 +3,7 @@
 /* 関数の定義 */
 double func(double x, double y);
 /* オイラー法 */
-void euler(double x, double y, double a, double b, int n, 
+void euler(double x, double y, double a, double b, int n,
                                double (*f)(double, double) );
 
 int main(void)
@@ -19,7 +19,7 @@ int main(void)
 }
 
 /* オイラー法 */
-void euler(double x, double y, double a, double b, int n, 
+void euler(double x, double y, double a, double b, int n,
                                double (*f)(double, double) )
 {
   double h;
@@ -29,7 +29,7 @@ void euler(double x, double y, double a, double b, int n,
 
   for ( i = 0 ; i < n ; i++)
   {
-    y = y + h * (*f)(x,y); 
+    y = y + h * (*f)(x,y);
     x += h;
     printf("x=%f \t y=%f \n", x, y );
   }

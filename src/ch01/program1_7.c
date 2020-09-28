@@ -16,7 +16,7 @@ int main(void)
 	/* float 型のマシンイプシロンの計算 */
 	/* feps + 1 > 1 の間, feps を 2 で割り続ける */
 	for(ftmp = feps + 1.0; ftmp > 1; feps /= 2.0, ftmp = feps + 1.0);
-	printf("float 型の  Machine epcilon は %-16g\n", 2.0 * feps);
+	printf("float 型の  Machine epsilon は %-16g\n", 2.0 * feps);
 	printf("float 型の Unit roundoff は %-16g\n", feps);
 
 	return 0;

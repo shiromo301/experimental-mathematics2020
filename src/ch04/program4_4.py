@@ -1,5 +1,3 @@
-# TODO: 出力がテキストと異なるバグを修正
-
 from math import cos
 
 EPS  = 10.0 ** -8.0 # epsilon の設定
@@ -31,7 +29,7 @@ def secant(x0: float, x1: float):
     if n == NMAX:
         print("答えが見つかりませんでした")
     else:
-        print(f"答えは x={x1} です")
+        print("答えは x={:.6f} です".format(x1))
 
 
 def f(x: float) -> float:

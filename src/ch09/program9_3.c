@@ -12,9 +12,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* ハウスホルダー法 */
 void householder( double **a, int n );
 /* qr法 */
@@ -40,7 +40,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */
   householder( a, N );                 /* ハウスホルダー法 */
   qr( a, eps, N );                     /* QR法 */
 
@@ -55,7 +55,7 @@ int main(void)
     printf( "\n" );
   }
   printf( "固有値は\n" );
-  for( i = 1; i <= N; i++ ) printf( "%10.7f\t", a[i][i] ); 
+  for( i = 1; i <= N; i++ ) printf( "%10.7f\t", a[i][i] );
   printf( "\n" );
 
   /* 領域の解放 */
@@ -76,22 +76,22 @@ void qr( double **a, double eps, int n )
   /* 領域の確保 */
   q = dmatrix( 1, n, 1, n ); work = dvector( 1, n );
 
-  m = n; 
+  m = n;
   while ( m > 1 )
   {
     /* 収束判定 */
-    if ( fabs(a[m][m-1]) < eps ) 
+    if ( fabs(a[m][m-1]) < eps )
     {
       m = m - 1; continue;
     }
-    
+
     /* 原点移動 */
     s = a[n][n];
     if ( m == n ) s = 0.0;   /* m=n のときは原点移動なし */
     for ( i = 1; i <= m; i++) a[i][i] -= s ;
 
     /* QR 法 */
-     
+
     for ( i = 1; i <= m; i++)
     {
       for( j = 1; j <= m; j++ )
@@ -101,7 +101,7 @@ void qr( double **a, double eps, int n )
       q[i][i] = 1.0;
     }
 
-    /* R と Q の計算 */ 
+    /* R と Q の計算 */
     for ( i = 1; i <= m-1; i++)
     {
       r = sqrt( a[i][i]*a[i][i] + a[i+1][i]*a[i+1][i] );
@@ -111,7 +111,7 @@ void qr( double **a, double eps, int n )
       }
       else
       {
-        sint = a[i+1][i]/r; cost = a[i][i]/r; 
+        sint = a[i+1][i]/r; cost = a[i][i]/r;
       }
       for ( j = i+1; j <= m; j++)
       {
@@ -120,7 +120,7 @@ void qr( double **a, double eps, int n )
         a[i][j] = tmp;
       }
       a[i+1][i] = 0.0;
-      a[i][i] = r; 
+      a[i][i] = r;
       for ( j = 1;  j <= m; j++ )
       {                          /* Q は P の転置 */
         tmp = q[j][i]*cost + q[j][i+1]*sint;
@@ -133,7 +133,7 @@ void qr( double **a, double eps, int n )
     for ( i = 1; i <= m; i++)
     {
       for ( j = i; j <= m ; j++ ) work[j] = a[i][j];
-      for ( j = 1; j <= m ; j++ ) 
+      for ( j = 1; j <= m ; j++ )
       {
         tmp = 0.0;
         for( k = i; k <= m; k++ ) tmp += work[k]*q[k][j];
@@ -144,7 +144,7 @@ void qr( double **a, double eps, int n )
     /* 原点移動後の処理 */
     for ( i = 1; i <= m; i++ ) a[i][i] = a[i][i] + s;
   }
-  
+
   /* 領域の解放 */
   free_dmatrix( q, 1, n, 1, n ); free_dvector( work, 1 );
 }
@@ -152,14 +152,14 @@ void qr( double **a, double eps, int n )
 /* ハウスホルダー法 */
 void householder( double **a, int n )
 {
-  int i, j, k;                  
-  double *u, *f, *g, gamma, s, ss, uu; 
+  int i, j, k;
+  double *u, *f, *g, gamma, s, ss, uu;
 
   /* ベクトル領域の確保 */
-  u = dvector( 1, n ); f = dvector( 1, n ); g = dvector( 1, n );               
+  u = dvector( 1, n ); f = dvector( 1, n ); g = dvector( 1, n );
 
   for ( k = 1; k <= n-2; k++)
-  { 
+  {
     /* v の計算 */
     for ( i = 1; i <= k; i++) u[i] = 0.0;
     for ( i = k+1; i <= n; i++) u[i] = a[i][k];
@@ -172,7 +172,7 @@ void householder( double **a, int n )
     if ( u[k+1] > 0.0 ) s = -s;
 
     /* u の計算 */
-    u[k+1] -= s; 
+    u[k+1] -= s;
     uu = sqrt( ss + u[k+1]*u[k+1] );
     for ( i = k+1; i <= n; i++) u[i] /= uu;
 
@@ -192,7 +192,7 @@ void householder( double **a, int n )
     for ( j = 1; j <= n; j++) gamma += u[j]*g[j];
 
     /* f, g の計算 */
-    for ( i = 1; i <= n; i++) 
+    for ( i = 1; i <= n; i++)
     {
       f[i] -=  gamma * u[i];
       g[i] -=  gamma * u[i];
@@ -210,7 +210,7 @@ void householder( double **a, int n )
   }
 
   /* ベクトル領域の解放 */
-  free_dvector( u, 1 ); free_dvector( f, 1 ); free_dvector( g, 1 ); 
+  free_dvector( u, 1 ); free_dvector( f, 1 ); free_dvector( g, 1 );
 }
 
 /* a[1...N][1...N] の入力 */
@@ -224,7 +224,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }
@@ -318,7 +318,7 @@ void matrix_vector_product(double **a, double *b, double *c)
 double inner_product( int m, int n, double *a, double *b)
 {
   int i;
-  double s = 0.0; 
+  double s = 0.0;
 
   for( i = m; i <= n; i++) s += a[i]*b[i];
 

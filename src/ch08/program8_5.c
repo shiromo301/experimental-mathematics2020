@@ -5,7 +5,7 @@ double *dvector(long i, long j);            /* ベクトル領域の確保 */
 void free_dvector(double *a, long i);       /* 領域の解放 */
 void FUNC(double x, double *y, double *f);  /* 関数の定義 */
 /* ルンゲ・クッタ法(N 変数版) */
-void rk4_m( double *y, double *f, int N, 
+void rk4_m( double *y, double *f, int N,
 	   double a, double b, int n, void (*F)(double, double *, double *) );
 
 int main(void)
@@ -25,14 +25,14 @@ int main(void)
 }
 
 /* ルンゲ・クッタ法(N 変数版) */
-void rk4_m( double *y, double *f, int N, 
+void rk4_m( double *y, double *f, int N,
             double a, double b, int n, void (*F)(double, double *, double *) )
 {
   double *k1, *k2, *k3, *k4, h, x, *tmp;
   int i, j;
 
-  k1 = dvector( 1, N );   k2 = dvector( 1, N ); 
-  k3 = dvector( 1, N );   k4 = dvector( 1, N ); 
+  k1 = dvector( 1, N );   k2 = dvector( 1, N );
+  k3 = dvector( 1, N );   k4 = dvector( 1, N );
   tmp = dvector( 1, N );
 
   /* 初期値の設定・表示 */
@@ -62,7 +62,7 @@ void rk4_m( double *y, double *f, int N,
     x += h;
     printf("x=%f \t y1=%f \t y2=%f \n", x, y[1], y[2]);
   }
- 
+
   /* 領域の解放 */
   free_dvector( k1, 1 );  free_dvector( k2, 1 );
   free_dvector( k3, 1 );  free_dvector( k4, 1 );

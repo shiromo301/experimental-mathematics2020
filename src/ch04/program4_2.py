@@ -21,7 +21,7 @@ def newton(x: float):
         n += 1
         if abs(d) <= EPS or n >= NMAX:
             break
-    
+
     if n == NMAX:
         print("答えが見つかりませんでした")
     else:

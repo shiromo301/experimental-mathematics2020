@@ -12,18 +12,18 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 部分ピポット選択付きガウス消去法 */
-double *gauss2( double **a, double *b, int n ); 
+double *gauss2( double **a, double *b, int n );
 /* 最小2乗近似 */
 void least_square( double *x, double *y, FILE *fout );
 
 int main(void)
 {
   FILE *fin, *fout;
-  double *x, *y; 
+  double *x, *y;
 
   /* ベクトルの領域確保 */
   x = dvector(1,M); /* x[1...M] */
@@ -83,10 +83,10 @@ void least_square( double *x, double *y, FILE *fout )
         p[i][j] += pow( x[k], (double)(i+j-2) );
       }
       p[j][i] = p[i][j];
-    } 
+    }
 }
   /* 連立一次方程式を解く. 結果は a に上書き */
-   a = gauss2( p, a, N+1 );            
+   a = gauss2( p, a, N+1 );
 
   /* 結果の出力 */
   fprintf( fout, "最小2乗近似式は y=\n");
@@ -94,13 +94,13 @@ void least_square( double *x, double *y, FILE *fout )
   {
     fprintf(fout, "+ %5.2f x^%d ", a[i],i-1);
   }
-  fprintf(fout, "\n"); 
+  fprintf(fout, "\n");
 
   /* 領域の解放 */
- free_dmatrix( p, 1, N+1, 1, N+1 ); free_dvector( a, 1 );  
+ free_dmatrix( p, 1, N+1, 1, N+1 ); free_dvector( a, 1 );
 }
 
-/* 部分ピポット選択付きガウス消去法 */
+/* 部分ピボット選択付きガウス消去法 */
 double *gauss2( double **a, double *b, int n )
 {
   int i, j, k, ip;
@@ -109,7 +109,7 @@ double *gauss2( double **a, double *b, int n )
 
   for( k = 1; k <= n-1; k++)
   {
-    /* ピポットの選択 */
+    /* ピボットの選択 */
     amax = fabs(a[k][k]); ip = k;
     for( i = k+1; i <= n; i++)
     {
@@ -161,7 +161,7 @@ void input_vector2( double *b, char c, int n, FILE *fin, FILE *fout)
 {
   int i;
 
-  fprintf( fout, "�x�N�g��%c�͎��̒ʂ�ł�\n", c);
+  fprintf( fout, "ベクトル%c は次の通りです\n", c);
   for( i = 1 ; i <= n ; i++)
   {
     fscanf(fin, "%lf", &b[i]);

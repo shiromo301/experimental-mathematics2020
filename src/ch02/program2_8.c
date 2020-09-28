@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <math.h> /* コンパイル時に-lmオプションが必要 */
 
 #define N 6 /* 要素の数 */
 

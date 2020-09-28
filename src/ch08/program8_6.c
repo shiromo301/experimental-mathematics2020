@@ -14,27 +14,27 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 修正コレスキー分解 */
 double **cholesky_decomp( double **a, int n );
 /* 修正コレスキー分解を利用して連立一次方程式を解く */
 double *cholesky_solve( double **a, double *b, int n );
 /* 境界値問題を解く */
-double *bvp(double *b, double a1, double a2, double u0, 
+double *bvp(double *b, double a1, double a2, double u0,
             double un, int n, double (*f)(double) );
 
 int main(void)
 {
   int i, n;
-  double *u, h; 
+  double *u, h;
 
   printf("分割数を入力してください--->");
   scanf("%d",&n);
 
   u = dvector( 1, n-1 );
-  u = bvp( u, 0.0, 1.0, 0.0, 0.0, n, func ); 
+  u = bvp( u, 0.0, 1.0, 0.0, 0.0, n, func );
   h = 1.0 / n;
 
   printf("求める答え u と誤差の最大値 e は次の通りです\n");
@@ -43,13 +43,13 @@ int main(void)
   printf("e=%f\n",vector_norm_max( u, 1, n-1 ));
 
   /* 領域の解放 */
-  free_dvector( u, 1 ); 
+  free_dvector( u, 1 );
 
   return 0;
 }
 
 /* 境界値問題を解く */
-double *bvp(double *b, double a1, double a2, double u0, 
+double *bvp(double *b, double a1, double a2, double u0,
             double un, int n, double (*f)(double) )
 
 {
@@ -65,7 +65,7 @@ double *bvp(double *b, double a1, double a2, double u0,
   {
     for ( j = 1; j <= n-1; j++ )
     {
-      a[i][j] = 0.0; 
+      a[i][j] = 0.0;
     }
     a[i][i] = 2.0; a[i][i+1] = -1.0; a[i][i-1] = -1.0;
   }
@@ -84,8 +84,8 @@ double *bvp(double *b, double a1, double a2, double u0,
   b = cholesky_solve( a, b, n-1 );
 
   /* 領域の解放 */
-  free_dmatrix( a, 1, n-1, 1, n-1); 
-  return b; 
+  free_dmatrix( a, 1, n-1, 1, n-1);
+  return b;
 }
 
 /* 関数の定義 */
@@ -114,16 +114,16 @@ double **cholesky_decomp( double **a, int n )
       {
         tmp += a[i][k]*a[k][k]*a[j][k];
       }
-      a[i][j] = (a[i][j] - tmp) / a[j][j]; 
+      a[i][j] = (a[i][j] - tmp) / a[j][j];
     }
       tmp = 0.0;
       for ( k = 1; k <= j-1; k++)
       {
         tmp += a[i][k]*a[i][k]*a[k][k];
       }
-      a[i][i] = a[i][i] - tmp; 
+      a[i][i] = a[i][i] - tmp;
   }
-  return a; 
+  return a;
 }
 
 double *cholesky_solve( double **a, double *b, int n )
@@ -152,7 +152,7 @@ double *cholesky_solve( double **a, double *b, int n )
       tmp += a[j][i] * b[j];
     }
     b[i] = b[i] - tmp;
-  } 
+  }
 
   return b;
 }

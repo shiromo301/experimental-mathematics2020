@@ -15,9 +15,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 比較関数 */
 int double_comp( const void *s1 , const void *s2 );
 /* 最大値ノルムの計算 a[m...n] */
@@ -28,7 +28,7 @@ double *sor(double **a, double *b, double *x, double omega);
 int main(void)
 {
   FILE *fin, *fout;
-  double **a, *b, *x, omega=1.22; 
+  double **a, *b, *x, omega=1.22;
   int i;
 
   /* 行列およびベクトルの領域確保 */
@@ -48,7 +48,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */
   input_vector( b, 'b', fin, fout );    /* ベクトル b の入出力 */
   input_vector( x, 'x', fin, fout );    /* 初期ベクトル x0 の入出力 */
   x = sor( a, b, x, omega );            /* SOR法 */
@@ -71,13 +71,13 @@ int main(void)
 /* SOR法 */
 double *sor(double **a, double *b, double *x, double omega)
 {
-  double eps, *xo, s, t; 
-  int i, j, k=0; 
+  double eps, *xo, s, t;
+  int i, j, k=0;
 
   xo = dvector(1,N); /* xo[1...N] */
 
   do
-  { 
+  {
     /* xo <- x_k, x <- x_{k+1} */
     for( i = 1; i <= N; i++ ) xo[i] = x[i];  /* x_k に x_(k+1) を代入 */
     /* i=1 の処理 */
@@ -90,10 +90,10 @@ double *sor(double **a, double *b, double *x, double omega)
       s = 0.0; t = 0.0;
       for( j = 1; j < i; j++)  s += a[i][j]*x[j];    /* i-1 列までの和 */
       for( j = i+1; j <= N; j++) t += a[i][j]*xo[j]; /* i+1 列以降の和 */
-      x[i] = ( b[i] - s - t )/a[i][i];          
+      x[i] = ( b[i] - s - t )/a[i][i];
     }
     /* ここまではガウス・ザイデル法と同じ */
-   
+
     /* SOR法 */
     for( i = 1; i <= N; i++ )
     {
@@ -129,7 +129,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

@@ -12,9 +12,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* ハウスホルダー法 */
 void householder( double **a, int n );
 /* qr法 */
@@ -49,28 +49,28 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */
 
   for( i = 1; i <= N; i++)
   {                          /* 行列のコピー */
-    for( j = 1; j <= N; j++) ao[i][j] = a[i][j]; 
+    for( j = 1; j <= N; j++) ao[i][j] = a[i][j];
   }
 
   householder( a, N );                 /* ハウスホルダー法 */
 
   qr( a, eps, N );                     /* QR法 */
   printf( "固有値は\n" );
-  for( i = 1; i <= N; i++ ) printf( "%10.7f\t", a[i][i] ); 
+  for( i = 1; i <= N; i++ ) printf( "%10.7f\t", a[i][i] );
   printf( "\n" );
 
   inverse_iteration( ao, a, eps );     /* 逆反復法 */
   printf("固有ベクトルは\n");
   for ( i = 1; i <= N; i++)
   {
-    printf("["); 
+    printf("[");
     for( j = 1; j <= N; j++)
-    { 
-      printf("%10.7f\t", a[j][i]); 
+    {
+      printf("%10.7f\t", a[j][i]);
     }
     printf("]");printf( "\n" );
   }
@@ -95,7 +95,7 @@ void inverse_iteration( double **ao, double **a, double eps )
   lu = dmatrix( 1, N, 1, N );
 
   for ( i = 1; i <= N; i++)
-  { 
+  {
     lambda = a[i][i];  /* 近似固有値の代入 */
     for( j = 1; j <= N; j++) y[j] = 0.0; y[i] = 1.0; /* 初期値設定 */
 
@@ -104,23 +104,23 @@ void inverse_iteration( double **ao, double **a, double eps )
     {
       for ( j = 1; j <= N; j++ ) lu[k][j] = ao[k][j];
       lu[k][k] = ao[k][k] - lambda;
-    }    
+    }
     lu_decomp( lu, p ); /* LU分解 */
 
     /* 逆反復法 */
     do
     {
       muo = mu;
-      for ( j = 1; j <= N; j++ ) v[j] = y[j]; 
-      v = lu_solve( lu, v, p );  /* 固有ベクトルの計算 */     
+      for ( j = 1; j <= N; j++ ) v[j] = y[j];
+      v = lu_solve( lu, v, p );  /* 固有ベクトルの計算 */
       mu = inner_product( 1, N, v, y );  /* 補正 */
       v2 = inner_product( 1, N, v, v );
       v2s = sqrt(v2);
       for( j = 1; j <= N ; j++) y[j]=v[j]/v2s;
-    }while( fabs((mu-muo)/mu) >= eps );  
+    }while( fabs((mu-muo)/mu) >= eps );
 
     /* 結果の代入 (固有ベクトルは a の i 列に) */
-    for ( j = 1; j <= N; j++ ) a[j][i] = y[j];      
+    for ( j = 1; j <= N; j++ ) a[j][i] = y[j];
   }
 
   free_dvector( v, 1 ); free_dvector( y, 1 ); free_dmatrix( lu, 1, N, 1, N );
@@ -221,14 +221,14 @@ void qr(double **a, double eps, int n)
 /* ハウスホルダー法 */
 void householder( double **a, int n )
 {
-  int i, j, k;                  
-  double *u, *f, *g, gamma, s, ss, uu; 
+  int i, j, k;
+  double *u, *f, *g, gamma, s, ss, uu;
 
   /* ベクトル領域の確保 */
-  u = dvector( 1, n ); f = dvector( 1, n ); g = dvector( 1, n );               
+  u = dvector( 1, n ); f = dvector( 1, n ); g = dvector( 1, n );
 
   for ( k = 1; k <= n-2; k++)
-  { 
+  {
     /* v の計算 */
     for ( i = 1; i <= k; i++) u[i] = 0.0;
     for ( i = k+1; i <= n; i++) u[i] = a[i][k];
@@ -241,7 +241,7 @@ void householder( double **a, int n )
     if ( u[k+1] > 0.0 ) s = -s;
 
     /* u の計算 */
-    u[k+1] -= s; 
+    u[k+1] -= s;
     uu = sqrt( ss + u[k+1]*u[k+1] );
     for ( i = k+1; i <= n; i++) u[i] /= uu;
 
@@ -261,7 +261,7 @@ void householder( double **a, int n )
     for ( j = 1; j <= n; j++) gamma += u[j]*g[j];
 
     /* f, g の計算 */
-    for ( i = 1; i <= n; i++) 
+    for ( i = 1; i <= n; i++)
     {
       f[i] -=  gamma * u[i];
       g[i] -=  gamma * u[i];
@@ -279,7 +279,7 @@ void householder( double **a, int n )
   }
 
   /* ベクトル領域の解放 */
-  free_dvector( u, 1 ); free_dvector( f, 1 ); free_dvector( g, 1 ); 
+  free_dvector( u, 1 ); free_dvector( f, 1 ); free_dvector( g, 1 );
 }
 
 /* a[1...N][1...N] の入力 */
@@ -293,7 +293,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

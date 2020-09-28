@@ -1,12 +1,10 @@
-/* �v���O����5.4 */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-#define N    10                   /* N�������� */
-#define EPS  pow(10.0, -8.0)      /* epsilon�̐ݒ� */
-#define KMAX 100                  /* �ő唽���� */
+#define N    10                   /* N元方程式 */
+#define EPS  pow(10.0, -8.0)      /* epsilonの設定 */
+#define KMAX 100                  /* 最大反復回数 */
 
 /* 行列の入力 */
 void input_matrix( double **a, char c, FILE *fin, FILE *fout);
@@ -17,9 +15,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 1 ノルムの計算 a[m...n] */
 double vector_norm1( double *a, int m, int n );
 /* A ベクトルa[m...n] と b[m...n] の内積を計算する */
@@ -52,7 +50,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */
   input_vector( b, 'b', fin, fout );    /* ベクトル b の入出力 */
   input_vector( x, 'x', fin, fout );    /* 初期ベクトル x0 の入出力 */
   x = cg( a, b, x );                    /* 共役勾配法(CG法) */
@@ -75,8 +73,8 @@ int main(void)
 /* 共役勾配法(CG法)  */
 double *cg(double **a, double *b, double *x)
 {
-  double eps, *r, *p, *tmp, alpha, beta, work; 
-  int i, k=0; 
+  double eps, *r, *p, *tmp, alpha, beta, work;
+  int i, k=0;
 
   r = dvector(1,N); /* r[1...N] */
   p = dvector(1,N); /* p[1...N] */
@@ -90,29 +88,29 @@ double *cg(double **a, double *b, double *x)
   }
 
   do
-  { 
+  {
     /* alpha の計算 */
     matrix_vector_product( a, p, tmp );  /* tmp <- A p_k */
     work = inner_product( 1, N, p, tmp); /* work <- (p,Ap_k) */
     alpha = inner_product( 1, N, p, r ) / work ;
 
     /* x_{k+1} と r_{k+1}の計算 */
-    for( i = 1; i <= N; i++) x[i] = x[i] + alpha*p[i]; 
-    for( i = 1; i <= N; i++) r[i] = r[i] - alpha*tmp[i]; 
+    for( i = 1; i <= N; i++) x[i] = x[i] + alpha*p[i];
+    for( i = 1; i <= N; i++) r[i] = r[i] - alpha*tmp[i];
 
     /* 収束判定 */
-    eps = vector_norm1(r, 1, N); 
+    eps = vector_norm1(r, 1, N);
     k++;  /* 反復回数の更新 */
     if ( eps < EPS )  goto OUTPUT;
 
     /* beta と p_{k+1} の計算 */
     beta = - inner_product( 1, N, r, tmp) / work;
-    for( i = 1; i <= N; i++) p[i] = r[i] + beta*p[i];     
+    for( i = 1; i <= N; i++) p[i] = r[i] + beta*p[i];
  }while( k < KMAX );
 
   OUTPUT:;
   /* 領域の解放 */
-  free_dvector( r, 1 ); free_dvector( p, 1 ); free_dvector( tmp, 1 ); 
+  free_dvector( r, 1 ); free_dvector( p, 1 ); free_dvector( tmp, 1 );
   if ( k == KMAX )
   {
     printf("答えが見つかりませんでした\n");
@@ -153,7 +151,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

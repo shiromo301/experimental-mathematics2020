@@ -43,7 +43,7 @@ def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
         # xo <- x_k, x <- x_{k+1}
         for i in range(1, N+1):
             xo[i] = x[i]        # x_k に x_(k+1) を代入
-        
+
         # i=1 の処理
         t = 0.0
         for j in range(2, N+1):
@@ -63,7 +63,7 @@ def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
         # SOR法
         for i in range(1, N+1):
             x[i] = xo[i] + omega * ( x[i] - xo[i] ) # 補正
-        
+
         for i in range(1, N+1):
             xo[i] = xo[i] - x[i]
         eps = vector_norm_max(xo)
@@ -71,7 +71,7 @@ def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
 
         if eps <= EPS or k >= KMAX:
             break
-    
+
     if k == KMAX:
         print("答えが見つかりませんでした")
     else:

@@ -3,7 +3,7 @@
 /* 関数の定義 */
 double func(double x, double y);
 /* ホイン法 */
-void heun(double x, double y, double a, double b, int n, 
+void heun(double x, double y, double a, double b, int n,
                               double (*f)(double, double) );
 
 int main(void)
@@ -19,7 +19,7 @@ int main(void)
 }
 
 /* ホイン法 */
-void heun(double x, double y, double a, double b, int n, 
+void heun(double x, double y, double a, double b, int n,
                               double (*f)(double, double) )
 {
   double k1, k2, h;

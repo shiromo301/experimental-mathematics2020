@@ -149,7 +149,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

@@ -4,9 +4,9 @@
 /* ベクトルの入力 */
 void input_vector3( double *b, int m, int n, FILE *fin );
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* ラグランジュ補間 */
 double lagrange( double *x, double *y, int m, int n, double xi );
 
@@ -17,7 +17,7 @@ int main(void)
   int n;
 
   printf("データの個数を入力してください--->");
-  scanf("%d", &n);  
+  scanf("%d", &n);
   n -= 1;  /* データ数が n なので, n <- n-1として添字を0,1,...,nとする */
 
   printf("補間点を入力してください--->");
@@ -72,7 +72,7 @@ double lagrange( double *x, double *y, int m, int n, double xi )
     {
       if( k != i ) li *= (xi -x[k]) / (x[i]-x[k]);
     }
-    pn += li * y[i]; 
+    pn += li * y[i];
   }
 
   return pn;

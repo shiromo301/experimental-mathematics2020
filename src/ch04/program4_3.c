@@ -29,7 +29,7 @@ void newton1( double x )
     d = -f(x)/df(x);
     x = x + d;
     n ++;
-    x0 = x1; x1 = x2; x2 = x; 
+    x0 = x1; x1 = x2; x2 = x;
   }while( fabs(d) > EPS && n < NMAX);
 
   m = (x0 - x1)/(x0 - 2.0*x1 + x2) ; /* 重複次数の計算 */
@@ -55,6 +55,3 @@ double df(double x)
 {
   return( 3.0*x*x - 2.0*x - 1.0 );
 }
-
-
-

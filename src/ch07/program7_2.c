@@ -15,16 +15,16 @@ int main(void)
 
   printf("4.0/(1+x*x) を [0,1]で積分します. 分割数は%d です\n", 2*n);
   printf("結果は%20.15fです\n",simpson(0.0, 1.0, n, func2) );
-  
+
   return 0;
 }
 
 /* シンプソン項式 */
 double simpson( double a, double b, int n, double (*f)(double) )
 {
-  double S, h; 
+  double S, h;
   int i;
- 
+
   h = ( b - a ) /( 2.0*n ) ;  /* 刻み幅の指定 */
 
   /* シンプソン項式 */
@@ -41,11 +41,11 @@ double simpson( double a, double b, int n, double (*f)(double) )
 
 /* 関数の定義 */
 double func1(double x)
-{ 
+{
   return( 2.0/(x*x) );
 }
 
 double func2(double x)
-{ 
+{
   return( 4.0 / (1.0+x*x) );
 }

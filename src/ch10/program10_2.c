@@ -25,7 +25,7 @@ int main(void)
   return 0;
 }
 
-void adds(int a[], int b[], int c[]) 
+void adds(int a[], int b[], int c[])
 {
   int up, i, sum;
   /* 加算 */
@@ -92,7 +92,7 @@ void print_result(int a[])
 
 void arctan(int a[], int n, int d)
 {
-  int e[N+1], f[N+1], p, i; 
+  int e[N+1], f[N+1], p, i;
 
   init(a,0); init(e,n);
 
@@ -122,7 +122,7 @@ void arctan(int a[], int n, int d)
 }
 
 /* 0 でない最左位置 p を探す */
-int top(int a[], int p) 
+int top(int a[], int p)
 {
   while( p<= N && a[p] == 0) p++;
   return p;
@@ -139,4 +139,3 @@ void init(int a[], int n)
     a[i] = 0;
   }
 }
-

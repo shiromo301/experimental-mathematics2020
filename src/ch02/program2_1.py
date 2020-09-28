@@ -16,11 +16,17 @@ class Dvector(object):
         if not(self.head_idx <= key <= self.last_idx):
             raise IndexError("Index out of range")
         return self.vector[key - self.head_idx]
-    
+
     def __setitem__(self, key: int, value):
         if not(self.head_idx <= key <= self.last_idx):
             raise IndexError("Index out of range")
         self.vector[key - self.head_idx] = value
+
+    # オブジェクトの値渡しで使用
+    def copy(self):
+        cpy = Dvector(self.head_idx, self.last_idx)
+        cpy.vector = self.vector.copy()
+        return cpy
 
 
 def main():

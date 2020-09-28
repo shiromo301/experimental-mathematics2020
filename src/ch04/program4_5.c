@@ -4,18 +4,18 @@
 
 #define EPS  pow(10.0,-8.0)   /* epsilon の設定 */
 #define KMAX 100              /* 最大反復回数 */
-#define N    3                /* N 元方程式 */ 
+#define N    3                /* N 元方程式 */
 
 /* 行列の領域確保 */
 double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 部分ピポット選択付きガウス消去法 */
-double *gauss( double **a, double *b ); 
+double *gauss( double **a, double *b );
 /* 1 ノルムの計算 a[m...n] */
 double vector_norm1( double *a, int m, int n );
 /* 関数の定義 */
@@ -32,7 +32,7 @@ double h_x(double x, double y, double z);
 double h_y(double x, double y, double z);
 double h_z(double x, double y, double z);
 /* Newton法 */
-void newton2( double x, double y, double z );    
+void newton2( double x, double y, double z );
 
 int main(void)
 {
@@ -57,14 +57,14 @@ void newton2( double x, double y, double z)
 
   do{
     /* 右辺ベクトルの作成 */
-    d[1]=-f(xk[1],xk[2],xk[3]); d[2]=-g(xk[1],xk[2],xk[3]); 
-    d[3]=-h(xk[1],xk[2],xk[3]); 
+    d[1]=-f(xk[1],xk[2],xk[3]); d[2]=-g(xk[1],xk[2],xk[3]);
+    d[3]=-h(xk[1],xk[2],xk[3]);
     /* ヤコビ行列の作成 */
-    J[1][1] = f_x(xk[1],xk[2],xk[3]); J[1][2] = f_y(xk[1],xk[2],xk[3]); 
-    J[1][3] = f_z(xk[1],xk[2],xk[3]); J[2][1] = g_x(xk[1],xk[2],xk[3]); 
-    J[2][2] = g_y(xk[1],xk[2],xk[3]); J[2][3] = g_z(xk[1],xk[2],xk[3]); 
-    J[3][1] = h_x(xk[1],xk[2],xk[3]); J[3][2] = h_y(xk[1],xk[2],xk[3]); 
-    J[3][3] = h_z(xk[1],xk[2],xk[3]); 
+    J[1][1] = f_x(xk[1],xk[2],xk[3]); J[1][2] = f_y(xk[1],xk[2],xk[3]);
+    J[1][3] = f_z(xk[1],xk[2],xk[3]); J[2][1] = g_x(xk[1],xk[2],xk[3]);
+    J[2][2] = g_y(xk[1],xk[2],xk[3]); J[2][3] = g_z(xk[1],xk[2],xk[3]);
+    J[3][1] = h_x(xk[1],xk[2],xk[3]); J[3][2] = h_y(xk[1],xk[2],xk[3]);
+    J[3][3] = h_z(xk[1],xk[2],xk[3]);
     d = gauss( J, d );  /* 連立一次方程式を解く */
     for ( i=1; i <= N; i++) xk[i] += d[i];
     k ++;

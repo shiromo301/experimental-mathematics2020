@@ -6,9 +6,9 @@
 double func1(double x);
 double func2(double x);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* ロンバーグ法 */
 double romberg( double a, double b, int N, double eps, double (*f)(double) );
 
@@ -22,32 +22,32 @@ int main(void)
 
   printf("4.0/(1+x*x) を [0,1] で積分します. 最大反復回数は%dです\n", N);
   printf("結果は%20.15fです\n",romberg(0.0, 1.0, N, eps, func2) );
- 
+
   return 0;
 }
 
 /* ロンバーグ法 */
 double romberg( double a, double b, int N, double eps, double (*f)(double) )
 {
-  double S, h, *t, f0, f1; 
+  double S, h, *t, f0, f1;
   int j, k, m, n;
 
-  t = dvector( 0, N );  
+  t = dvector( 0, N );
   h = b - a; 
-  f0 = (*f)(a); f1 = (*f)(b);  
+  f0 = (*f)(a); f1 = (*f)(b);
   t[0] = h*( f0 + f1 )/2.0;
 
   /* ロンバーグ法 */
   for( n = 1; n <= N; n++)
   {
     h = h / 2.0;  S = 0.0;
-    for( j = 1; j <= (int)(pow(2.0,n)-1.0); j++ ) S += (*f)( a + j*h ); 
+    for( j = 1; j <= (int)(pow(2.0,n)-1.0); j++ ) S += (*f)( a + j*h );
     t[n] = h*( f0 + 2.0*S + f1 )/2.0;
-    if( fabs(t[n]-t[n-1]) < eps ) return t[n]; 
-    k = n; 
+    if( fabs(t[n]-t[n-1]) < eps ) return t[n];
+    k = n;
     for( m = 1; m <= n; m++)
     {
-      k = k-1;     
+      k = k-1;
       t[k] = ( pow(4.0,m)*t[k+1]-t[k] )/( pow(4.0,m)-1.0 );
       if( k >= 1 &&  fabs(t[k]-t[k-1]) < eps  ) return t[k];
     }
@@ -61,12 +61,12 @@ double romberg( double a, double b, int N, double eps, double (*f)(double) )
 
 /* 関数の定義 */
 double func1(double x)
-{ 
+{
   return( 2.0/(x*x) );
 }
 
 double func2(double x)
-{ 
+{
   return( 4.0 / (1.0+x*x) );
 }
 
@@ -88,4 +88,3 @@ void free_dvector(double *a, int i)
 {
 	free( (void *)(a + i) ); /* (void *) 型へのキャストが必要 */
 }
-

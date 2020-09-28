@@ -28,7 +28,7 @@ void secant( double x0, double x1 )
     y1 = f(x1);
     d = -d * y1 / (y1 - y0);
     x1 = x1 + d;
-    y0 = y1; 
+    y0 = y1;
     n ++;
   }while( fabs(d) > EPS && n < NMAX);
 

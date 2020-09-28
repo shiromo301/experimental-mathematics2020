@@ -12,16 +12,16 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* ガウス消去法 */
-double *simple_gauss( double **a, double *b ); 
+double *simple_gauss( double **a, double *b );
 
 int main(void)
 {
   FILE *fin, *fout;
-  double **a, *b; 
+  double **a, *b;
   int i;
 
   /* 行列およびベクトルの領域確保 */
@@ -40,7 +40,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */
   input_vector( b, 'b', fin, fout );    /* ベクトル b の入出力 */
   b = simple_gauss( a, b );             /* ガウス消去法 */
 
@@ -91,7 +91,7 @@ double *simple_gauss( double **a, double *b )
     b[k] = tmp/a[k][k];
   }
 
-  return b; 
+  return b;
 }
 
 /* a[1...N][1...N] の入力 */
@@ -105,7 +105,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

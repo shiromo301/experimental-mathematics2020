@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 double *dvector(long i, long j);      /* ベクトル領域の確保 */
-void free_dvector(double *a, long i); /* �領域の解放 */
+void free_dvector(double *a, long i); /* 領域の解放 */
 double func(double x, double y);      /* 関数の定義 */
 /* ルンゲ・クッタ法 */
-double *rk4( double y0, double *y, double a, double b, int n, 
+double *rk4( double y0, double *y, double a, double b, int n,
                                    double (*f)(double, double) );
 
 int main(void)
@@ -31,7 +31,7 @@ int main(void)
 }
 
 /* ルンゲ・クッタ法 */
-double *rk4( double y0, double *y, double a, double b, int n, 
+double *rk4( double y0, double *y, double a, double b, int n,
                                    double (*f)(double, double) )
 {
   double k1, k2, k3, k4, h, x;
@@ -39,7 +39,7 @@ double *rk4( double y0, double *y, double a, double b, int n,
 
   h = (b-a)/n;
   /* 初期値の設定 */
-  y[0] = y0; x = a;    
+  y[0] = y0; x = a;
 
   /* ルンゲ・クッタ法 */
   for ( i = 0 ; i < n ; i++)

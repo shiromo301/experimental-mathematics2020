@@ -13,20 +13,20 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 行列 a[1...N][1...N] とベクトル b[1...N] との積 c<-Ab */
 void matrix_vector_product( double **a, double *b, double *c );
 /* ベクトル a[m...n] と b[m...n] の内積を計算する */
 double inner_product( int m, int n, double *a, double *b);
 /* べき乗法 */
-void power_method( double **a, double *x, FILE *fout);  
+void power_method( double **a, double *x, FILE *fout);
 
 int main(void)
 {
   FILE *fin, *fout;
-  double **a, *x;   
+  double **a, *x;
 
   a = dmatrix( 1, N, 1, N );  /* 行列領域の確保 */
   x = dvector( 1, N );        /* ベクトル領域の確保 */
@@ -43,13 +43,13 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */
   input_vector( x, 'x', fin, fout);    /* ベクトル x の入出力 */
-  power_method( a, x, fout );          /* べき乗法 */ 
+  power_method( a, x, fout );          /* べき乗法 */
 
   /* 領域の解放 */
   free_dmatrix( a, 1, N, 1, N );
-  free_dvector( x, 1 ); 
+  free_dvector( x, 1 );
 
   /* ファイルのクローズ */
   fclose(fin); fclose(fout);
@@ -74,18 +74,18 @@ void power_method( double **a, double *x,  FILE *fout)
     v2s = sqrt(v2);
     for( i = 1; i <= N ; i++) x[i]=v[i]/v2s;
     ++k;
-    }while( fabs(v2-lambda*lambda) >= eps );  
+    }while( fabs(v2-lambda*lambda) >= eps );
 
-  fprintf(fout, "反復回数は%d\n",k);  
-  fprintf(fout, "絶対値最大固有値 lambda は%f\n",lambda);  
-  fprintf(fout, "これに対応する固有ベクトルは次のとおりです\n");  
+  fprintf(fout, "反復回数は%d\n",k);
+  fprintf(fout, "絶対値最大固有値 lambda は%f\n",lambda);
+  fprintf(fout, "これに対応する固有ベクトルは次のとおりです\n");
 
-  for( i = 1; i <= N; i++ ) 
+  for( i = 1; i <= N; i++ )
   {
     fprintf( fout, "v[%d]=%f\n", i, x[i]) ;
   }
 
-  free_dvector( v, 1 ); 
+  free_dvector( v, 1 );
 }
 
 /* a[1...N][1...N] の入力 */
@@ -99,7 +99,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }
@@ -193,7 +193,7 @@ void matrix_vector_product(double **a, double *b, double *c)
 double inner_product( int m, int n, double *a, double *b)
 {
   int i;
-  double s = 0.0; 
+  double s = 0.0;
 
   for( i = m; i <= n; i++) s += a[i]*b[i];
 

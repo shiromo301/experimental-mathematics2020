@@ -26,6 +26,13 @@ class Dmatrix(object):
     def __setitem__(self, key, value):
         self.matrix[key] = value
 
+    # オブジェクトの値渡しで使用
+    def copy(self):
+        cpy = Dmatrix(self.row_head_idx, self.row_last_idx, self.col_head_idx, self.col_last_idx)
+        for i in range(self.row_head_idx, self.row_last_idx+1):
+            cpy.matrix[i] = self.matrix[i].copy()
+        return cpy
+
 
 def main():
     global M, N

@@ -6,10 +6,10 @@ double *dvector(long i, long j);      /* ベクトル領域の確保 */
 void free_dvector(double *a, long i); /* 領域の解放 */
 double func(double x, double y);      /* 関数の定義 */
 /* ルンゲ・クッタ法 */
-double *rk4( double y0, double *y, double a, double b, int n, 
+double *rk4( double y0, double *y, double a, double b, int n,
                                    double (*f)(double, double) );
 /* アダムス法 */
-double *adams( double y0, double *y, double a, double b, int n, 
+double *adams( double y0, double *y, double a, double b, int n,
 	       int N, double eps, double (*f)(double, double) );
 
 int main(void)
@@ -23,7 +23,7 @@ int main(void)
   y = dvector( 0, n );      /* 領域の確保 */
 
   /* アダムス法 */
-  y = adams( y0, y, a, b, n, N, eps, func );  
+  y = adams( y0, y, a, b, n, N, eps, func );
 
   /* 結果の表示 */
   h = (b-a)/n ;             /* 刻み幅 */
@@ -37,7 +37,7 @@ int main(void)
 }
 
 /* アダムス法 */
-double *adams( double y0, double *y, double a, double b, int n, 
+double *adams( double y0, double *y, double a, double b, int n,
                int N, double eps, double (*f)(double, double) )
 {
   double yp, h, *F, x;
@@ -48,13 +48,13 @@ double *adams( double y0, double *y, double a, double b, int n,
   h = (b-a)/n;           /* 刻み幅の設定 */
 
   /* スタータ */
-  y = rk4( y0, y, a, b, n, f);  
-  x = a; 
+  y = rk4( y0, y, a, b, n, f);
+  x = a;
   for ( i = 0; i <= 3; i++)
   {
     F[i] = f(x,y[i]); x += h;
-  } 
- 
+  }
+
   /* 反復計算 */
   for ( i = 3; i <= n-1; i++)
   {
@@ -66,10 +66,10 @@ double *adams( double y0, double *y, double a, double b, int n,
       /* アダムス・ムルトン法 */
       F[4] = f(x,yp);
       y[i+1] = y[i] + h*(9.0*F[4]+19.0*F[3]-5.0*F[2]+F[1])/24.0;
-      if ( fabs(y[i+1]-yp) < eps ) break; 
+      if ( fabs(y[i+1]-yp) < eps ) break;
       yp = y[i+1];
     }
-    for ( j = 1; j <= 4; j++) F[j-1] = F[j];  /* F[i] の更新 */ 
+    for ( j = 1; j <= 4; j++) F[j-1] = F[j];  /* F[i] の更新 */
     x += h;
   }
 

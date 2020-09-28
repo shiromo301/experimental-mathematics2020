@@ -12,9 +12,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* ベクトル領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* ハウスホルダー法 */
 void householder( double **a, int n );
 
@@ -38,7 +38,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout);    /* 行列 A の入出力 */
   householder( a, N );                 /* ハウスホルダー法 */
 
   /* 結果の出力 */
@@ -64,14 +64,14 @@ int main(void)
 /* ハウスホルダー法 */
 void householder( double **a, int n )
 {
-  int i, j, k;                  
-  double *u, *f, *g, gamma, s, ss, uu; 
+  int i, j, k;
+  double *u, *f, *g, gamma, s, ss, uu;
 
   /* ベクトル領域の確保 */
-  u = dvector( 1, n ); f = dvector( 1, n ); g = dvector( 1, n );               
+  u = dvector( 1, n ); f = dvector( 1, n ); g = dvector( 1, n );
 
   for ( k = 1; k <= n-2; k++)
-  { 
+  {
     /* v の計算 */
     for ( i = 1; i <= k; i++) u[i] = 0.0;
     for ( i = k+1; i <= n; i++) u[i] = a[i][k];
@@ -84,7 +84,7 @@ void householder( double **a, int n )
     if ( u[k+1] > 0.0 ) s = -s;
 
     /* u の計算 */
-    u[k+1] -= s; 
+    u[k+1] -= s;
     uu = sqrt( ss + u[k+1]*u[k+1] );
     for ( i = k+1; i <= n; i++) u[i] /= uu;
 
@@ -104,7 +104,7 @@ void householder( double **a, int n )
     for ( j = 1; j <= n; j++) gamma += u[j]*g[j];
 
     /* f, g の計算 */
-    for ( i = 1; i <= n; i++) 
+    for ( i = 1; i <= n; i++)
     {
       f[i] -=  gamma * u[i];
       g[i] -=  gamma * u[i];
@@ -122,7 +122,7 @@ void householder( double **a, int n )
   }
 
   /* ベクトル領域の解放 */
-  free_dvector( u, 1 ); free_dvector( f, 1 ); free_dvector( g, 1 ); 
+  free_dvector( u, 1 ); free_dvector( f, 1 ); free_dvector( g, 1 );
 }
 
 /* a[1...N][1...N] の入力 */
@@ -136,7 +136,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

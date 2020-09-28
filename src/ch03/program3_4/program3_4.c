@@ -12,9 +12,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* 修正コレスキー分解 */
 double **cholesky_decomp( double **a );
 /* 修正コレスキー分解を利用して連立一次方程式を解く */
@@ -23,8 +23,8 @@ double *cholesky_solve( double **a, double *b );
 int main(void)
 {
   FILE *fin, *fout;
-  double **a, *b; 
-  int i; 
+  double **a, *b;
+  int i;
 
   /* 行列およびベクトルの領域確保 */
   a = dmatrix(1, N, 1, N); /* 行列 a[1...N][1...N] */
@@ -42,7 +42,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout );  /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout );  /* 行列 A の入出力 */
   input_vector( b, 'b', fin, fout );  /* ベクトル b の入出力 */
   a = cholesky_decomp( a );           /* 修正コレスキー分解 */
   b = cholesky_solve( a, b );         /* 前進代入・後退代入 */
@@ -78,16 +78,16 @@ double **cholesky_decomp( double **a )
       {
         tmp += a[i][k]*a[k][k]*a[j][k];
       }
-      a[i][j] = (a[i][j] - tmp) / a[j][j]; 
+      a[i][j] = (a[i][j] - tmp) / a[j][j];
     }
       tmp = 0.0;
       for ( k = 1; k <= j-1; k++)
       {
         tmp += a[i][k]*a[i][k]*a[k][k];
       }
-      a[i][i] = a[i][i] - tmp; 
+      a[i][i] = a[i][i] - tmp;
   }
-  return a; 
+  return a;
 }
 
 /* 修正コレスキー分解を利用して連立一次方程式を解く */
@@ -117,7 +117,7 @@ double *cholesky_solve( double **a, double *b )
       tmp += a[j][i] * b[j];
     }
     b[i] = b[i] - tmp;
-  } 
+  }
 
   return b;
 }
@@ -133,7 +133,7 @@ void input_matrix(double **a, char c, FILE *fin, FILE *fout)
     for (j = 1; j <= N; j++)
     {
       fscanf(fin, "%lf", &a[i][j]);
-      fprintf(fout, "5.2f\t", a[i][j]);
+      fprintf(fout, "%5.2f\t", a[i][j]);
     }
     fprintf(fout, "\n");
   }

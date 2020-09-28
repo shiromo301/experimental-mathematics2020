@@ -15,7 +15,7 @@ int main(void)
   int y[N+1] = {00001, 45678, 88888, 90000, 88888, 77777, 66666};
   int z[N+1];  /* 結果は z へ */
 
-  printf("x = ");  print_result(x); 
+  printf("x = ");  print_result(x);
   printf("y = ");  print_result(y);
   adds(x, y, z);   printf("x+y=\t"); print_result(z);
   subs(x, y, z);   printf("x-y=\t"); print_result(z);
@@ -68,7 +68,7 @@ void subs(int x[], int y[], int z[])
 void muls(int x[], int z[], int n )
 {
   /* 乗算 */
-  int i, up=0, prod; 
+  int i, up=0, prod;
   for ( i=N; i>=0; i--)
   {
     prod = x[i] * n + up;
@@ -80,7 +80,7 @@ void muls(int x[], int z[], int n )
 void divs(int x[], int z[], int n)
 {
   /* 除算 */
-  int amari, i, bunshi; 
+  int amari, i, bunshi;
   amari = 0;
   for ( i=0 ; i<=N; i++)
   {
