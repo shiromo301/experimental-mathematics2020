@@ -13,9 +13,9 @@ double **dmatrix(int nr1, int nr2, int nl1, int nl2);
 /* 行列の領域解放 */
 void free_dmatrix(double **a, int nr1, int nr2, int nl1, int nl2);
 /* ベクトル領域の確保 */
-double *dvector(int i, int j);  
+double *dvector(int i, int j);
 /* 領域の解放 */
-void free_dvector(double *a, int i); 
+void free_dvector(double *a, int i);
 /* LU分解 */
 void lu_decomp( double **a, int *p);
 /* LU分解を利用して連立一次方程式を解く */
@@ -24,7 +24,7 @@ double *lu_solve( double **a, double *b, int *p );
 int main(void)
 {
   FILE *fin, *fout;
-  double **a, *b; 
+  double **a, *b;
   int i, p[N]; /* p[1...N-1] を利用, p[0] は未使用 */
 
   /* 行列およびベクトルの領域確保 */
@@ -43,7 +43,7 @@ int main(void)
     exit(1);
    }
 
-  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */  
+  input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */
   input_vector( b, 'b', fin, fout );    /* ベクトル b の入出力 */
   lu_decomp( a, p);                 /* LU分解 */
   b = lu_solve( a, b, p );         /* 前進代入・後退代入 */
@@ -72,7 +72,7 @@ void lu_decomp( double **a, int *p )
 
   for( k = 1; k <= N-1; k++)
   {
-    /* ピポットの選択 */
+    /* ピボットの選択 */
     amax = fabs(a[k][k]); ip = k;
     for( i = k+1; i <= N; i++)
     {
