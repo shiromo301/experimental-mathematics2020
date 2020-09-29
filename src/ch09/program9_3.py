@@ -19,40 +19,41 @@ def main():
     with open("input_eigen.dat", "r") as fin:
         with open("result_eigen.dat", "w") as fout:
             input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
-            householder( a, N )               # ハウスホルダー法
-            qr( a, eps, N )                   # QR法
+            a_hh = householder( a, N )               # ハウスホルダー法
+            a_qr = qr( a_hh, eps, N )                   # QR法
 
             # 結果の出力
             print("QR法の結果は")
             for i in range(1, N+1):
                 for j in range(1, N+1):
-                    print("{:10.7f}\t".format(a[i][j]), end="")
+                    print("{:10.7f}\t".format(a_qr[i][j]), end="")
                 print()
 
             print("固有値は")
             for i in range(1, N+1):
-                print("{:10.7f}\t".format(a[i][i]), end="")
+                print("{:10.7f}\t".format(a_qr[i][i]), end="")
             print()
 
 
 # QR法
-def qr(a: Dmatrix, eps: float, n: int):
+def qr(a: Dmatrix, eps: float, n: int) -> Dmatrix:
     # 領域の確保
     q    = Dmatrix(1, n, 1, n)
     work = Dvector(1, n)
+    a_qr = a.copy()
     m = n
     while m > 1:
         # 収束判定
-        if abs(a[m][m-1]) < eps:
+        if abs(a_qr[m][m-1]) < eps:
             m = m - 1
             continue
 
         # 原点移動
-        s = a[n][n]
+        s = a_qr[n][n]
         if m == n:  # m=n のときは原点移動なし
             s = 0.0
         for i in range(1, m+1):
-            a[i][i] -= s
+            a_qr[i][i] -= s
         
         # QR法
         for i in range(1, m+1):
@@ -62,19 +63,19 @@ def qr(a: Dmatrix, eps: float, n: int):
         
         # R と Q の計算
         for i in range(1, m):
-            r = sqrt( a[i][i]*a[i][i] + a[i+1][i]*a[i+1][i] )
+            r = sqrt( a_qr[i][i]*a_qr[i][i] + a_qr[i+1][i]*a_qr[i+1][i] )
             if r == 0.0:
                 sint = 0.0
                 cost = 0.0
             else:
-                sint = a[i+1][i] / r
-                cost = a[i][i] / r
+                sint = a_qr[i+1][i] / r
+                cost = a_qr[i][i] / r
             for j in range(i+1, m+1):
-                tmp = a[i][j]*cost + a[i+1][j]*sint
-                a[i+1][j] = -a[i][j]*sint + a[i+1][j]*cost
-                a[i][j] = tmp
-            a[i+1][i] = 0.0
-            a[i][i] = r
+                tmp = a_qr[i][j]*cost + a_qr[i+1][j]*sint
+                a_qr[i+1][j] = -a_qr[i][j]*sint + a_qr[i+1][j]*cost
+                a_qr[i][j] = tmp
+            a_qr[i+1][i] = 0.0
+            a_qr[i][i] = r
             for j in range(1, m+1):        # Q は P の転置
                 tmp = q[j][i]*cost + q[j][i+1]*sint
                 q[j][i+1] = -q[j][i]*sint + q[j][i+1]*cost
@@ -83,16 +84,15 @@ def qr(a: Dmatrix, eps: float, n: int):
         # RQ の計算
         for i in range(1, m+1):
             for j in range(i, m+1):
-                work[j] = a[i][j]
+                work[j] = a_qr[i][j]
             for j in range(1, m+1):
-                tmp = 0.0
-                for k in range(i, m+1):
-                    tmp += work[k] * q[k][j]
-                a[i][j] = tmp
+                a_qr[i][j] = sum( ( work[k] * q[k][j] for k in range(i, m+1) ) )
             
         # 原点移動後の処理
         for i in range(1, m+1):
-            a[i][i] = a[i][i] + s
+            a_qr[i][i] += s
+
+    return a_qr
 
 
 if __name__ == "__main__":

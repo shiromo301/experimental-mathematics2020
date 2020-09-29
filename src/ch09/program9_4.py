@@ -25,9 +25,9 @@ def main():
         with open("result_eigen.dat", "w") as fout:
             input_matrix( a, 'A', fin, fout ) # 行列Aの入出力
 
-            householder(a, N) # ハウスホルダー法
+            a_hh = householder(a, N) # ハウスホルダー法
 
-            a_qr = qr( a, eps, N) # QR 法
+            a_qr = qr( a_hh , eps, N) # QR 法
             print("固有値は")
             for i in range(1, N+1):
                 print("{:10.7f}".format(a[i][i]), end="\t")
@@ -58,7 +58,8 @@ def inverse_iteration( a: Dmatrix, a_qr: Dmatrix, eps: float ) -> Dmatrix:
         # 行列の作成およびLU分解
         for k in range(1, N+1):
             lu[k][k] -= lambda_
-        lu = lu_decomp(lu, N) # LU分解
+        print(lu)
+        # lu = lu_decomp(lu, N) # LU分解
 
         # 逆反復法
         while True:
