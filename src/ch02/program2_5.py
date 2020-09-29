@@ -31,7 +31,7 @@ def matrix_sum(a: Dmatrix, b: Dmatrix):
     m1, m2 = a.row_head_idx, a.row_last_idx
     n1, n2 = a.col_head_idx, a.col_last_idx
     c = Dmatrix(m1, m2, n1, n2)
-    
+
     for i in range(m1, m2+1):
         for j in range(n1, n2+1):
             c[i][j] = a[i][j] + b[i][j]

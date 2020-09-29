@@ -12,7 +12,7 @@ def main():
         a[i] = (10 - i) / 20.0 * (-1.0) ** i
     for i in range(1, N+1):
         print(f"a[{i}]={a[i]}")
-    
+
     print(f"ベクトル a の1ノルムは{vector_norm1( a )}です")
     print(f"ベクトル a の2ノルムは{vector_norm2( a )}です")
     print(f"ベクトル a の最大値ノルムは{vector_norm_max( a )}です")

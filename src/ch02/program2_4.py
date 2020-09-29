@@ -10,7 +10,7 @@ def main():
     for i in range(1, N+1):
         a[i] = i / 20.0
         b[i] = i / 10.0
-    
+
     print(f"a と b の内積は{inner_product(a, b)} です")
 
 
@@ -20,7 +20,7 @@ def inner_product(a: Dvector, b: Dvector):
 
     for i,j in zip(a, b):
         s += i * j
-    
+
     return s
 
 if __name__ == "__main__":
