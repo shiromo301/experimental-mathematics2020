@@ -1,6 +1,4 @@
-# TODO: バグ未修正のprogram3_4.pyにおける修正版コレスキー分解(cholesky_decomp)関数と
-# 修正版コレスキー分解を利用して連立一次方程式を解く(cholesky_solve)関数を用いている
-# ため, 先にprogram3_4.pyのバグを修正する必要あり.
+# TODO: プログラム8.6の実装
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))

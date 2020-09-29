@@ -1,7 +1,4 @@
-# TODO: program4_5同様, program3_3.pyがインポートできない問題を解決
-# TODO: インポートが解決してもprogram3_3は現状LU分解を計算するlu_decomp関数及び
-# LU分解を利用して連立一次方程式を解lu_solve関数のバグを修正しなければこのコード
-# も正常に動作しない. 先にprogram3_3のバグを修正する
+# TODO: プログラム9.4の実装
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
