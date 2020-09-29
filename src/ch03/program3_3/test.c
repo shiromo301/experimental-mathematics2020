@@ -125,16 +125,41 @@ double *lu_solve( double **a, double *b, int *p )
   int i, j, k;
   double tmp;
 
+  // printf("変数:\n");
+  // printf("a:\n");
+  // for(i=1;i<=N;i++) {
+  //   for(j=1;j<=N;j++) printf("%f ", a[i][j]);
+  //   printf("\n");
+  // }
+  // printf("b: ");
+  // for(i=1;i<=N;i++) printf("%f ", b[i]);
+  // printf("\n");
+  // printf("p: ");
+  // for(i=0;i<N;i++) printf("%d ", p[i]);
+  // printf("\n");
+  // printf("N: %d\n", N);
+
   /* 右辺の行交換 */
   for( k = 1; k <= N-1; k++)
   {
     tmp=b[k]; b[k]=b[p[k]]; b[p[k]]=tmp;
+
+    // printf("b[%d]=%f\n", k, b[k]);
+    // printf("b[%d]=%f\n", p[k], b[p[k]]);
+
     /* 前進代入 */
     for( i=k+1; i <= N; i++)
     {
       b[i] = b[i] + a[i][k]*b[k];
+      // printf("b[%d]=%f\n", i, b[i]);
     }
   }
+
+  // printf("右辺の行交換後: ");
+  // for(i=1;i<=N;i++){
+    // printf("%f ", b[i]);
+  // }
+  // printf("\n");
 
   /* 後退代入 */
   b[N] = b[N]/a[N][N];
@@ -147,6 +172,12 @@ double *lu_solve( double **a, double *b, int *p )
     }
     b[k] = tmp/a[k][k];
   }
+
+  printf("後退代入後: ");
+  for(i=1;i<=N;i++){
+    printf("%f ", b[i]);
+  }
+  printf("\n");
 
   return b;
 }

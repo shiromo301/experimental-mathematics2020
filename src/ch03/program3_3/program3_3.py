@@ -1,5 +1,6 @@
 # TODO: テキストと出力結果が合わないバグを修正
 # C言語プログラムとの比較により、lu_decomp関数は正常に動作していることが確認済み。
+# C言語プログラムとの比較により、lu_solve関数の右辺の行交換後まで正常に動作していることが確認済み。
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../ch02'))
@@ -70,12 +71,13 @@ def lu_decomp(a: Dmatrix, N: int=N) -> Tuple[Dmatrix, List[int]]:
 # LU分解を利用して連立一次方程式を解く
 def lu_solve(a: Dmatrix, b: Dvector, p: List[int], N:int=N) -> Dvector:
     b_lu = b.copy() # 値渡し
+
     # 右辺の行交換
     for k in range(1, N):
-        b_lu[k], b_lu[p[k]] = b[p[k]], b[k]
-    # 前進代入
-    for i in range(k+1, N+1):
-        b_lu[i] += a[i][k] * b_lu[k]
+        b_lu[k], b_lu[p[k]] = b_lu[p[k]], b_lu[k]
+        # 前進代入
+        for i in range(k+1, N+1):
+            b_lu[i] += a[i][k] * b_lu[k]
 
     # 後退代入
     b_lu[N] /= a[N][N]
