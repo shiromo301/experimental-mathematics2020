@@ -1,4 +1,5 @@
 # TODO: テキストと出力結果が合わないバグを修正
+# C言語プログラムとの比較により、cholesky_decomp関数が正常に動作していることは確認済み
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../ch02'))
@@ -33,9 +34,9 @@ def main():
 def cholesky_decomp(a: Dmatrix, N:int=N):
     a_cd = a.copy()
     for i in range(2, N+1):
-        for j in range(1, i):
-            a_cd[i][j] = (a[i][j] - sum((a[i][k] * a[k][k] * a[j][k] for k in range(1,j)))) / a[j][j]
-        a_cd[i][i] = a[i][i] - sum((a[i][k] * a[i][k] * a[k][k] for k in range(1,j)))
+        for j in range(1,i):
+            a_cd[i][j] = (a_cd[i][j] - sum(( a_cd[i][k] * a_cd[k][k] * a_cd[j][k] for k in range(1, j) ))) / a_cd[j][j]
+        a_cd[i][i] -= sum((a_cd[i][k] * a_cd[i][k] * a_cd[k][k] for k in range(1, j+1) ))
     return a_cd
 
 
