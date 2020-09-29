@@ -1,9 +1,6 @@
-# TODO: program3_2がインポートできない問題を修正
-# 上が修正できても出力が合わない可能性あり
-
-import sys
-sys.path.append("../ch02")
-sys.path.append("../ch03/program3_2")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch03/program3_2'))
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix
@@ -49,7 +46,7 @@ def newton2(x: float, y: float, z: float):
         J[3][1] = h_x(xk[1], xk[2], xk[3])
         J[3][2] = h_y(xk[1], xk[2], xk[3])
         J[3][3] = h_z(xk[1], xk[2], xk[3])
-        d = gauss( J, d ) # 連立一次方程式を解く
+        d = gauss( J, d, N ) # 連立一次方程式を解く
         for i in range(1, N+1):
             xk[i] += d[i]
         k += 1
@@ -80,7 +77,7 @@ def f_x(x: float, y: float, z: float) -> float:
 
 
 def f_y(x: float, y: float, z: float) -> float:
-    return -1.0 + 2.0*x
+    return -1.0 + 2.0*y
 
 
 def f_z(x: float, y: float, z: float) -> float:

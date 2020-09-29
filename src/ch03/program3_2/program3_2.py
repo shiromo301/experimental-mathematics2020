@@ -26,29 +26,29 @@ def main():
                 fout.write(f"{b[i]}\n")
 
 
-# 部分ピポット選択付きガウス消去法
-def gauss(a: Dmatrix, b: Dvector):
+# 部分ピボット選択付きガウス消去法
+def gauss(a: Dmatrix, b: Dvector, N:int=N):
     eps = 2.0 ** -50.0 # eps = 2^{-50}とする
 
     for k in range(1, N):
-        # ピポットの選択
+        # ピボットの選択
         amax = abs(a[k][k])
         ip = k
         for i in range(k+1, N+1):
             if abs(a[i][k]) > amax:
                 amax = abs(a[i][k])
                 ip = i
-        
+
         # 正則性の判定
         if amax < eps:
             print("入力した行列は正則ではない!!")
-        
+
         # 行交換
         if ip != k:
             for j in range(k, N+1):
                 a[k][j], a[ip][j] = a[ip][j], a[k][j]
             b[k], b[ip] = b[ip], b[k]
-        
+
         # 前進消去
         for i in range(k+1, N+1):
             alpha = - a[i][k] / a[k][k]
