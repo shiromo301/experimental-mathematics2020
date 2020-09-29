@@ -1,5 +1,3 @@
-# TODO: プログラム9.4の実装
-
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../ch03/program3_3'))
@@ -30,7 +28,7 @@ def main():
             a_qr = qr( a_hh , eps, N) # QR 法
             print("固有値は")
             for i in range(1, N+1):
-                print("{:10.7f}".format(a[i][i]), end="\t")
+                print("{:10.7f}".format(a_qr[i][i]), end="\t")
             print()
 
             a_ii = inverse_iteration( a, a_qr, eps ) # 逆反復法
@@ -44,11 +42,9 @@ def main():
 
 # 逆反復法
 def inverse_iteration( a: Dmatrix, a_qr: Dmatrix, eps: float ) -> Dmatrix:
-    p = [0] * (a.row_last_idx - a.row_head_idx + 1) # p[1...N-1] を利用, p[0] は未使用
     mu = 0.0
 
     y    = Dvector(1, N)
-    lu   = a.copy()
     a_ii = a_qr.copy()
 
     for i in range(1, N+1):
@@ -56,10 +52,10 @@ def inverse_iteration( a: Dmatrix, a_qr: Dmatrix, eps: float ) -> Dmatrix:
         y[i] = 1.0 # 初期値設定
 
         # 行列の作成およびLU分解
+        lu = a.copy()
         for k in range(1, N+1):
             lu[k][k] -= lambda_
-        print(lu)
-        # lu = lu_decomp(lu, N) # LU分解
+        lu, p = lu_decomp(lu, N) # LU分解
 
         # 逆反復法
         while True:
