@@ -14,7 +14,6 @@ def main():
 
     # ファイルのオープン
     with open("input.dat", "r") as fin:
-        print(fin.readline())
         with open("output.dat", "w") as fout:
             input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
             input_vector( b, 'b', fin, fout ) # ベクトル b の入出力
@@ -23,7 +22,7 @@ def main():
             # 結果の出力
             fout.write("Ax=b の解は次の通りです\n")
             for i in range(1, N+1):
-                fout.write(f"{b[i]}\n")
+                fout.write("{:.6f}\n".format(b[i]))
 
 
 # ガウス消去法
