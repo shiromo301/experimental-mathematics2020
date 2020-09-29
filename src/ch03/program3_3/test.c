@@ -46,6 +46,19 @@ int main(void)
   input_matrix( a, 'A', fin, fout );    /* 行列 A の入出力 */
   input_vector( b, 'b', fin, fout );    /* ベクトル b の入出力 */
   lu_decomp( a, p );                 /* LU分解 */
+
+  for( i = 1; i <= N ; i++) {
+    for( int j = 1; j <= N; j++ ) printf("%f ", a[i][j]);
+    printf("\n");
+  }
+
+  printf("\n");
+
+  for( i = 0 ; i < N ; i++) {
+    printf("%d ", p[i]);
+  }
+  printf("\n");
+
   b = lu_solve( a, b, p );         /* 前進代入・後退代入 */
 
   /* 結果の出力 */

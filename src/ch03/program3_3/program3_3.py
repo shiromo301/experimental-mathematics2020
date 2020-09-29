@@ -1,4 +1,5 @@
 # TODO: テキストと出力結果が合わないバグを修正
+# C言語プログラムとの比較により、lu_decomp関数は正常に動作していることが確認済み。
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../ch02'))
@@ -71,7 +72,7 @@ def lu_solve(a: Dmatrix, b: Dvector, p: List[int], N:int=N) -> Dvector:
     b_lu = b.copy() # 値渡し
     # 右辺の行交換
     for k in range(1, N):
-        b_lu[k], b_lu[p[k]] = b_lu[p[k]], b_lu[k]
+        b_lu[k], b_lu[p[k]] = b[p[k]], b[k]
     # 前進代入
     for i in range(k+1, N+1):
         b_lu[i] += a[i][k] * b_lu[k]
