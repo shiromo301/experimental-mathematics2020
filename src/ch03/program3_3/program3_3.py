@@ -3,6 +3,8 @@
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../ch02'))
 
+from typing import List, Tuple
+
 from program2_1 import Dvector
 from program2_2 import Dmatrix
 from program2_3 import input_vector, input_matrix
@@ -30,7 +32,7 @@ def main():
 
 
 # LU分解
-def lu_decomp(a: Dmatrix, N: int=N):
+def lu_decomp(a: Dmatrix, N: int=N) -> Tuple[Dmatrix, List[int]]:
     eps = 2.0 ** -50.0 # eps = 2^{-50}とする
     p = [0] * (a.row_last_idx - a.row_head_idx + 1) # p[1...N-1] を利用, p[0] は未使用
     a_lu = a.copy() # 値渡し
@@ -61,11 +63,11 @@ def lu_decomp(a: Dmatrix, N: int=N):
             for j in range(k+1, N+1):
                 a_lu[i][j] += alpha * a_lu[k][j]
 
-    return a_lu, p
+    return (a_lu, p)
 
 
 # LU分解を利用して連立一次方程式を解く
-def lu_solve(a: Dmatrix, b: Dvector, p, N:int=N):
+def lu_solve(a: Dmatrix, b: Dvector, p: List[int], N:int=N) -> Dvector:
     b_lu = b.copy() # 値渡し
     # 右辺の行交換
     for k in range(1, N):
