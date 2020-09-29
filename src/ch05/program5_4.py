@@ -14,17 +14,17 @@ KMAX = 100          # 最大反復回数
 def main():
     global N
 
-    a = Dmatrix(1, N, 1, N) # 行列 a[1...N][1...N]
-    b = Dvector(1, N)       # b[1...N]
-    x = Dvector(1, N)       # x[1...N]
+    a  = Dmatrix(1, N, 1, N) # 行列 a[1...N][1...N]
+    b  = Dvector(1, N)       # b[1...N]
+    x0 = Dvector(1, N)       # x[1...N]
 
     # ファイルのオープン
     with open("input_sp.dat", "r") as fin:
         with open("output_sp.dat", "w") as fout:
-            input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
-            input_vector( b, 'b', fin, fout ) # ベクトル b の入出力
-            input_vector( x, 'x', fin, fout ) # 初期ベクトル x0 の入出力
-            x = cg( a, b, x )                 # 共役勾配法(CG法)
+            input_matrix(  a,  'A', fin, fout ) # 行列 A の入出力
+            input_vector(  b,  'b', fin, fout ) # ベクトル b の入出力
+            input_vector( x0, 'x0', fin, fout ) # 初期ベクトル x0 の入出力
+            x = cg( a, b, x0 )                  # 共役勾配法(CG法)
 
             # 結果の出力
             fout.write("Ax=b の解は次の通りです\n")
@@ -33,11 +33,12 @@ def main():
 
 
 # 共役勾配法 (CG法)
-def cg(a: Dmatrix, b: Dvector, x: Dvector):
+def cg(a: Dmatrix, b: Dvector, x0: Dvector):
     k = 0
 
     r = Dvector(1, N) # r[1...N]
     p = Dvector(1, N) # p[1...N]
+    x = x0.copy()
 
     tmp = matrix_vector_product( a, x ) # tmp <- A b
 
@@ -53,9 +54,9 @@ def cg(a: Dmatrix, b: Dvector, x: Dvector):
 
         # x_{k+1} と r_{k+1} の計算
         for i in range(1, N+1):
-            x[i] = x[i] + alpha * p[i]
+            x[i] += alpha * p[i]
         for i in range(1, N+1):
-            r[i] = r[i] - alpha * tmp[i]
+            r[i] -= alpha * tmp[i]
 
         # 収束判定
         eps = vector_norm1(r)
@@ -67,12 +68,13 @@ def cg(a: Dmatrix, b: Dvector, x: Dvector):
         beta = - inner_product(r, tmp) / work
         for i in range(1, N+1):
             p[i] = r[i] + beta * p[i]
-        
+
         if k >= KMAX:
             break
 
     if k == KMAX:
         print("答えが見つかりませんでした")
+        exit(1)
     else:
         print(f"反復回数は{k}回です") # 反復回数を画面に表示
         return x
@@ -84,10 +86,7 @@ def matrix_vector_product(a: Dmatrix, b: Dvector):
     c = Dvector(1, N)
 
     for i in range(1, N+1):
-        wk = 0.0
-        for j in range(1, N+1):
-            wk += a[i][j] * b[j]
-        c[i] = wk
+        c[i] = sum( ( a[i][j] * b[j] for j in range(1, N+1) ) )
 
     return c
 
