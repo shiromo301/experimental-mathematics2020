@@ -120,6 +120,7 @@ double *cholesky_solve( double **a, double *b )
       tmp += a[j][j]*a[i][j]*b[j];
     }
     b[i] = ( b[i] - tmp ) / a[i][i];
+    printf("b[%d]=%f\n", i, b[i]);
   }
 
   /* L^t x = y */
@@ -131,6 +132,7 @@ double *cholesky_solve( double **a, double *b )
       tmp += a[j][i] * b[j];
     }
     b[i] = b[i] - tmp;
+    printf("b[%d]=%f\n", i, b[i]);
   }
 
   return b;

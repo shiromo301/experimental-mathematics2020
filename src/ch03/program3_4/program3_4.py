@@ -1,6 +1,3 @@
-# TODO: テキストと出力結果が合わないバグを修正
-# C言語プログラムとの比較により、cholesky_decomp関数が正常に動作していることは確認済み
-
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../ch02'))
 
@@ -27,7 +24,7 @@ def main():
             # 結果の出力
             fout.write("Ax=bの解は次の通りです\n")
             for i in range(1, N+1):
-                fout.write(f"{b_cs[i]}\t\n")
+                fout.write("{:.6f}\t\n".format(b_cs[i]))
 
 
 # 修正コレスキー分解
@@ -46,7 +43,7 @@ def cholesky_solve(a_cd: Dmatrix, b: Dvector, N:int=N):
     # LDy = b
     b_cs[1] = b[1] / a_cd[1][1]
     for i in range(2, N+1):
-        b_cs[i] = ( b[i] - sum( ( a_cd[j][j] * a_cd[i][j] * b[j] for j in range(1,i) ) ) ) / a_cd[i][i]
+        b_cs[i] = ( b_cs[i] - sum( ( a_cd[j][j] * a_cd[i][j] * b_cs[j] for j in range(1,i) ) ) ) / a_cd[i][i]
 
     # L^t x = y
     for i in range(N-1, 0, -1):
