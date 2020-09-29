@@ -16,13 +16,13 @@ def main():
     with open("input_eigen.dat", "r") as fin:
         with open("result_eigen.dat", "w") as fout:
             input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
-            householder( a, N )               # ハウスホルダー法
+            a_hh = householder( a, N )               # ハウスホルダー法
 
             # 結果の出力
             print("Hessenberg 行列は")
             for i in range(1, N+1):
                 for j in range(1, N+1):
-                    print("{:10.7f}\t".format(a[i][j]), end="")
+                    print("{:10.7f}\t".format(a_hh[i][j]), end="")
                 print()
 
 
@@ -32,12 +32,14 @@ def householder(a: Dmatrix, n: int):
     f = Dvector(1, n)
     g = Dvector(1, n)
 
+    a_hh = a.copy()
+
     for k in range(1, n-1):
         # v の計算
         for i in range(1, k+1):
             u[i] = 0.0
         for i in range(k+1, n+1):
-            u[i] = a[i][k]
+            u[i] = a_hh[i][k]
 
         # s の計算
         ss = 0.0
@@ -59,8 +61,8 @@ def householder(a: Dmatrix, n: int):
         for i in range(1, n+1):
             f[i], g[i] = 0.0, 0.0
             for j in range(k+1, n+1):
-                f[i] += a[i][j]*u[j]
-                g[i] += a[j][i]*u[j]
+                f[i] += a_hh[i][j]*u[j]
+                g[i] += a_hh[j][i]*u[j]
 
         # gammaの計算
         gamma = 0.0
@@ -75,7 +77,9 @@ def householder(a: Dmatrix, n: int):
         # A の計算
         for i in range(1, n+1):
             for j in range(1, n+1):
-                a[i][j] = a[i][j] - 2.0*u[i]*g[j] - 2.0*f[i]*u[j]
+                a_hh[i][j] -= 2.0*u[i]*g[j] + 2.0*f[i]*u[j]
+    
+    return a_hh
 
 
 if __name__ == "__main__":
