@@ -27,7 +27,7 @@ def main():
 
 
 # ハウスホルダー法
-def householder(a: Dmatrix, n: int):
+def householder(a: Dmatrix, n: int) -> Dmatrix:
     u = Dvector(1, n)
     f = Dvector(1, n)
     g = Dvector(1, n)
