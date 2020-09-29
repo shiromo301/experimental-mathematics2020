@@ -105,7 +105,7 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 
 - `ch02/input.dat` -> 変更なし
 - `ch03/program3_1/input.dat` -> 変更なし
-- `ch03/program3_2/input.dat` -> **変更あり**
+- `ch03/program3_2/input.dat` -> **変更あり** <br>
 【テキスト】
 ```
 2.00 4.00 1.00 -3.00
@@ -132,7 +132,7 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 - `ch05/output_sp.dat` -> 変更なし
 - `ch06/input_func.dat` -> 変更なし
 - `ch06/input_lag.dat` -> 変更なし
-- `ch09/input_eigen.dat` -> **変更あり**
+- `ch09/input_eigen.dat` -> **変更あり** <br>
 【テキスト】
 ```
 16.00	-1.00	 1.00	 2.00
