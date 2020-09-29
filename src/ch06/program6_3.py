@@ -1,5 +1,5 @@
-import sys
-sys.path.append("../ch02")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix
@@ -29,7 +29,7 @@ def main():
             while xi <= x[n]:
                 fout.write("{:.6f} \t {:.6f}\n".format(xi, newton_ip(x,y,n,xi)))
                 xi += 0.01
-            
+
 
 # ニュートン補間
 # 添字は 0,1,...,n と仮定
@@ -45,7 +45,7 @@ def newton_ip(x: Dvector, y: Dvector, n: int, xi: float) -> float:
     for j in range(1, n+1):
         for i in range(n-j+1):
             a[i][j] = ( a[i+1][j-1] - a[i][j-1] ) / ( x[i+j] - x[i] )
-    
+
     # 補間の計算
     pn, li = y[0], 1.0
     for j in range(1, n+1):

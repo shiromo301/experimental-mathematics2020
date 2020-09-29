@@ -1,5 +1,5 @@
-import sys
-sys.path.append("../ch02")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
 
 from program2_1 import Dvector
 from program8_1 import func

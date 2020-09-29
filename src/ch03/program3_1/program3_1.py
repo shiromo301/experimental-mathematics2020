@@ -1,5 +1,5 @@
-import sys
-sys.path.append("../../ch02")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../ch02'))
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix
@@ -35,7 +35,7 @@ def simple_gauss(a: Dmatrix, b: Dvector):
             for j in range(k+1, N+1):
                 a[i][j] += alpha * a[k][j]
             b[i] += alpha * b[k]
-    
+
     # 後退代入
     b[N] /= a[N][N]
     for k in range(N-1,0,-1):

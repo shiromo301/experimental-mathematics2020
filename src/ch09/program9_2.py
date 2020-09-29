@@ -1,6 +1,7 @@
-import sys
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
+
 from math import sqrt
-sys.path.append("../ch02")
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix
@@ -23,7 +24,7 @@ def main():
                 for j in range(1, N+1):
                     print("{:10.7f}\t".format(a[i][j]), end="")
                 print()
-            
+
 
 # ハウスホルダー法
 def householder(a: Dmatrix, n: int):
@@ -60,12 +61,12 @@ def householder(a: Dmatrix, n: int):
             for j in range(k+1, n+1):
                 f[i] += a[i][j]*u[j]
                 g[i] += a[j][i]*u[j]
-        
+
         # gammaの計算
         gamma = 0.0
         for j in range(1, n+1):
             gamma += u[j]*g[j]
-        
+
         # f, gの計算
         for i in range(1, n+1):
             f[i] -= gamma * u[i]

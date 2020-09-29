@@ -1,7 +1,7 @@
-# TODO: 答え(+-の符号)が合わない(固有値はOK)バグを修正
-import sys
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
+
 from math import sqrt
-sys.path.append("../ch02")
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix

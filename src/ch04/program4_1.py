@@ -1,6 +1,6 @@
 def main():
     eps = 2.0 ** -30.0
-    
+
     print("初期区間 [a,b] を入力してください--->a b")
     a, b = map(float, input().split())
     print("区間の分割数 n を入力してください--->n")
@@ -36,7 +36,7 @@ def bisection(a: float, b: float, eps: float):
 # 関数の定義
 def f(x: float):
     return x ** 5 - 5 * (x ** 3) + 4 * x
-    
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
-import sys
-sys.path.append("../ch02")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix
@@ -33,7 +33,7 @@ def least_square(x: Dvector, y: Dvector, fout):
         a[i] = 0.0
         for j in range(1, M+1):
             a[i] += y[j] * (x[j] ** (i - 1))
-    
+
     # 係数行列の作成
     for i in range(1, N+2):
         for j in range(1, i+1):
@@ -64,7 +64,7 @@ def gauss2(a: Dvector, b: Dvector, n: int):
             if abs(a[i][k]) > amax:
                 amax = abs(a[i][k])
                 ip = i
-        
+
         # 正則性の判定
         if amax < eps:
             print("入力した行列は正則ではない!!")
@@ -77,7 +77,7 @@ def gauss2(a: Dvector, b: Dvector, n: int):
             tmp = b[k]
             b[k] = b[ip]
             b[ip] = tmp
-        
+
         # 前進消去
         for i in range(k+1, n+1):
             alpha = -a[i][k] / a[k][k]

@@ -3,9 +3,9 @@
 # LU分解を利用して連立一次方程式を解lu_solve関数のバグを修正しなければこのコード
 # も正常に動作しない. 先にprogram3_3のバグを修正する
 
-import sys
-sys.path.append("../ch02")
-sys.path.append("../ch03/program3_3")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch02'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../ch03/program3_3'))
 
 from program2_1 import Dvector
 from program2_2 import Dmatrix
