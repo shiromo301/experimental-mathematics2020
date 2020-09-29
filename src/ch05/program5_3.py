@@ -15,17 +15,17 @@ KMAX = 100          # 最大反復回数
 def main():
     omega = 1.22
 
-    a = Dmatrix(1, N, 1, N) # 行列 a[1...N][1...N]
-    b = Dvector(1, N)       # b[1...N]
-    x = Dvector(1, N)       # x[1...N]
+    a  = Dmatrix(1, N, 1, N) # 行列 a[1...N][1...N]
+    b  = Dvector(1, N)       # b[1...N]
+    x0 = Dvector(1, N)       # x0[1...N]
 
     # ファイルのオープン
     with open("input_sp.dat", "r") as fin:
         with open("output_sp.dat", "w") as fout:
-            input_matrix( a, 'A', fin, fout ) # 行列 A の入出力
-            input_vector( b, 'b', fin, fout ) # ベクトル b の入出力
-            input_vector( x, 'x', fin, fout ) # 初期ベクトル x0 の入出力
-            x = sor( a, b, x, omega )         # SOR法
+            input_matrix(  a,  'A', fin, fout ) # 行列 A の入出力
+            input_vector(  b,  'b', fin, fout ) # ベクトル b の入出力
+            input_vector( x0, 'x0', fin, fout ) # 初期ベクトル x0 の入出力
+            x = sor( a, b, x0, omega )          # SOR法
 
             # 結果の出力
             fout.write("Ax=b の解は次の通りです\n")
@@ -34,9 +34,10 @@ def main():
 
 
 # SOR法
-def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
+def sor(a: Dmatrix, b: Dvector, x0: Dvector, omega: float, N:int=N):
     k = 0
 
+    x  = x0.copy()
     xo = Dvector(1, N) # xo[1...N]
 
     while True:
@@ -45,18 +46,12 @@ def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
             xo[i] = x[i]        # x_k に x_(k+1) を代入
 
         # i=1 の処理
-        t = 0.0
-        for j in range(2, N+1):
-            t += a[i][j] * xo[j]
-        x[1] = ( b[1] - t ) / a[1][1]
+        x[1] = ( b[1] - sum( ( a[1][j] * xo[j] for j in range(2, N+1) ) ) ) / a[1][1]
 
         # i=2,3,...N の処理
         for i in range(2, N+1):
-            s, t = 0.0, 0.0
-            for j in range(1, i):
-                s += a[i][j] * x[j]  # i-1列までの和
-            for j in range(i+1, N+1):
-                t += a[i][j] * xo[j] # i+1列以降の和
+            s = sum( ( a[i][j] * x[j]  for j in range( 1 ,  i ) ) ) # i-1列までの和
+            t = sum( ( a[i][j] * xo[j] for j in range(i+1, N+1) ) ) # i+1列以降の和
             x[i] = ( b[i] - s - t ) / a[i][i]
         # ここまではガウス・ザイデル法と同じ
 
@@ -74,6 +69,7 @@ def sor(a: Dmatrix, b: Dvector, x: Dvector, omega: float):
 
     if k == KMAX:
         print("答えが見つかりませんでした")
+        exit(1)
     else:
         print(f"反復回数は{k}回です")      # 反復回数を画面に表示
         return x
