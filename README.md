@@ -136,7 +136,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 動作確認は、本リポジトリの`src`ディレクトリ下のファイル構造で行っています。具体的には、以下のようなファイル構造です:
 ```
 .
-├── __init__.py
 ├── ch01
 │   ├── program1_1.c
 │   ├── program1_1.py
@@ -153,21 +152,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   ├── program1_7.c
 │   └── program1_7.py
 ├── ch02
-│   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── __init__.cpython-37.pyc
-│   │   ├── __init__.cpython-38.pyc
-│   │   ├── program2_1.cpython-37.pyc
-│   │   ├── program2_1.cpython-38.pyc
-│   │   ├── program2_11.cpython-38.pyc
-│   │   ├── program2_2.cpython-37.pyc
-│   │   ├── program2_2.cpython-38.pyc
-│   │   ├── program2_3.cpython-37.pyc
-│   │   ├── program2_3.cpython-38.pyc
-│   │   ├── program2_4.cpython-37.pyc
-│   │   ├── program2_4.cpython-38.pyc
-│   │   ├── program2_8.cpython-37.pyc
-│   │   └── program2_8.cpython-38.pyc
 │   ├── input.dat
 │   ├── output.dat
 │   ├── program2_1.c
@@ -201,29 +185,21 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   │   ├── program3_1.c
 │   │   └── program3_1.py
 │   ├── program3_2
-│   │   ├── __pycache__
-│   │   │   └── program3_2.cpython-37.pyc
 │   │   ├── input.dat
 │   │   ├── output.dat
 │   │   ├── program3_2.c
 │   │   └── program3_2.py
 │   ├── program3_3
-│   │   ├── __pycache__
-│   │   │   └── program3_3.cpython-38.pyc
 │   │   ├── input_lu.dat
 │   │   ├── output_lu.dat
 │   │   ├── program3_3.c
 │   │   └── program3_3.py
 │   └── program3_4
-│       ├── __pycache__
-│       │   └── program3_4.cpython-38.pyc
 │       ├── input_cho.dat
 │       ├── output_cho.dat
 │       ├── program3_4.c
 │       └── program3_4.py
 ├── ch04
-│   ├── __pycache__
-│   │   └── program4_5.cpython-37.pyc
 │   ├── program4_1.c
 │   ├── program4_1.py
 │   ├── program4_2.c
@@ -235,8 +211,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   ├── program4_5.c
 │   └── program4_5.py
 ├── ch05
-│   ├── __pycache__
-│   │   └── program5_4.cpython-37.pyc
 │   ├── input_sp.dat
 │   ├── output_sp.dat
 │   ├── program5_1.c
@@ -259,8 +233,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   ├── program6_3.c
 │   └── program6_3.py
 ├── ch07
-│   ├── __pycache__
-│   │   └── program7_1.cpython-37.pyc
 │   ├── program7_1.c
 │   ├── program7_1.py
 │   ├── program7_2.c
@@ -270,9 +242,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   ├── program7_4.c
 │   └── program7_4.py
 ├── ch08
-│   ├── __pycache__
-│   │   ├── program8_1.cpython-37.pyc
-│   │   └── program8_3.cpython-37.pyc
 │   ├── program8_1.c
 │   ├── program8_1.py
 │   ├── program8_2.c
@@ -286,10 +255,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   ├── program8_6.c
 │   └── program8_6.py
 ├── ch09
-│   ├── __pycache__
-│   │   ├── program9_2.cpython-37.pyc
-│   │   ├── program9_2.cpython-38.pyc
-│   │   └── program9_3.cpython-38.pyc
 │   ├── input_eigen.dat
 │   ├── program9_1.c
 │   ├── program9_1.py
@@ -301,9 +266,6 @@ Pythonによる実装に際して、Pythonの`input`関数(や、`file.readline`
 │   ├── program9_4.py
 │   └── result_eigen.dat
 └── ch10
-    ├── __pycache__
-    │   ├── program10_1.cpython-37.pyc
-    │   └── test.cpython-37.pyc
     ├── program10_1.c
     ├── program10_1.py
     ├── program10_2.c
