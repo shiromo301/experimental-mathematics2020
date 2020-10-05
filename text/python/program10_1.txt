@@ -1,101 +1,86 @@
-#include <stdio.h>
+from typing import List
 
-#define N 6       /* 求める桁数 5*(N+1) 桁 */
-#define DEG   100000    /*  桁数の基準  */
+N   = 6      # 求める桁数 5*(N+1) 桁
+DEG = 100000 # 桁数の基準
 
-void adds(int x[], int y[], int z[]); /* z = x+y */
-void subs(int x[], int y[], int z[]); /* z = x-y */
-void muls(int x[], int z[], int n ); /* z = x*n */
-void divs(int x[], int z[], int n); /* z = x/n */
-void print_result(int x[]); /* 表示用関数 */
+def main():
+    x = [2, 12345, 99999, 33333, 44444, 55555, 66666]
+    y = [1, 45678, 88888, 90000, 88888, 77777, 66666]
 
-int main(void)
-{
-  int x[N+1] = {00002, 12345, 99999, 33333, 44444, 55555, 66666};
-  int y[N+1] = {00001, 45678, 88888, 90000, 88888, 77777, 66666};
-  int z[N+1];  /* 結果は z へ */
+    print("x = ", end="")
+    print_result(x)
+    print("y = ", end="")
+    print_result(y)
+    z = adds(x, y)
+    print("x+y=", end="\t")
+    print_result(z)
+    z = subs(x, y)
+    print("x-y=", end="\t")
+    print_result(z)
+    z = muls(x, 9999)
+    print("x*9999=", end="\t")
+    print_result(z)
+    z = divs(x, 9999)
+    print("x/9999=", end="\t")
+    print_result(z)
 
-  printf("x = ");  print_result(x);
-  printf("y = ");  print_result(y);
-  adds(x, y, z);   printf("x+y=\t"); print_result(z);
-  subs(x, y, z);   printf("x-y=\t"); print_result(z);
-  muls(x, z, 9999);  printf("x*9999=\t"); print_result(z);
-  divs(x, z, 9999);  printf("x/9999=\t"); print_result(z);
 
-  return 0;
-}
+def adds(x: List[int], y: List[int], N: int = N, DEG:int = DEG) -> List[int]:
+    # 加算
+    z, up = [0] * len(x), 0
+    for i in range(N, -1, -1):
+        sum_ = x[i] + y[i] + up
+        if sum_ > DEG - 1:
+            z[i] = sum_ - DEG
+            up = 1
+        else:
+            z[i] = sum_
+            up = 0
+    return z
 
-void adds(int x[], int y[], int z[])
-{
-  int up, i, sum;
-  /* 加算 */
-  up = 0;
-  for ( i=N; i>=0; i--)
-  {
-    sum = x[i]+y[i]+up;
-    if ( sum > DEG-1 )
-    {
-      z[i] = sum - DEG;
-      up = 1;
-    }
-    else
-    {
-      z[i]=sum; up = 0;
-    }
-  }
-}
 
-void subs(int x[], int y[], int z[])
-{
-  int borrow, i, sub;
-  /* 減算 */
-  borrow = 0;
-  for ( i=N; i>=0; i--)
-  {
-    sub = x[i]-y[i]-borrow;
-    if ( sub >= 0)
-    {
-      z[i] = sub; borrow = 0;
-    }
-    else
-    {
-      z[i] = DEG + sub;
-      borrow = 1;
-    }
-  }
-}
+def subs(x: List[int], y: List[int], N: int = N, DEG: int = DEG) -> List[int]:
+    # 減算
+    z, borrow = [0]*len(x), 0
+    for i in range(N, -1, -1):
+        sub = x[i] - y[i] - borrow
+        if sub >= 0:
+            z[i]   = sub
+            borrow = 0
+        else:
+            z[i]   = DEG + sub
+            borrow = 1
+    return z
 
-void muls(int x[], int z[], int n )
-{
-  /* 乗算 */
-  int i, up=0, prod;
-  for ( i=N; i>=0; i--)
-  {
-    prod = x[i] * n + up;
-    z[i] = prod % DEG;
-    up = prod / DEG;
-  }
-}
 
-void divs(int x[], int z[], int n)
-{
-  /* 除算 */
-  int amari, i, bunshi;
-  amari = 0;
-  for ( i=0 ; i<=N; i++)
-  {
-    bunshi = amari * DEG + x[i];
-    z[i] = bunshi/n;
-    amari = bunshi % n;
-  }
-}
+def muls(x: List[int], n: int) -> List[int]:
+    global N, DEG
+    # 乗算
+    z, up = [0]*len(x), 0
+    for i in range(N, -1, -1):
+        prod = x[i] * n + up
+        z[i] = prod % DEG
+        up   = prod / DEG
+    return z
 
-void print_result(int x[])
-{
-  int i;
-  for ( i = 0; i <= N; i++)
-  {
-    printf("%05u ",x[i]);
-  }
-  printf("\n");
-}
+
+def divs(x: List[int], n: int) -> List[int]:
+    global N, DEG
+    # 除算
+    z, amari = [0]*len(x), 0
+    for i in range(N+1):
+        bunshi = amari * DEG + x[i]
+        z[i]   = bunshi / n
+        amari  = bunshi % n
+    return z
+
+
+def print_result(x: List[int]) -> None:
+    global N
+    for i in range(N+1):
+        print("%05u" % x[i], end=" ")
+    print()
+
+
+if __name__ == "__main__":
+    main()
