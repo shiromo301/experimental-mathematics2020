@@ -13,9 +13,9 @@ def main():
     for i in range(1, N+1):
         print(f"a[{i}]={a[i]}")
 
-    print(f"ベクトル a の1ノルムは{vector_norm1( a )}です")
-    print(f"ベクトル a の2ノルムは{vector_norm2( a )}です")
-    print(f"ベクトル a の最大値ノルムは{vector_norm_max( a )}です")
+    print("ベクトル a の1ノルムは{:.6f}です".format(vector_norm1( a )))
+    print("ベクトル a の2ノルムは{:.6f}です".format(vector_norm2( a )))
+    print("ベクトル a の最大値ノルムは{:.6f}です".format(vector_norm_max( a )))
 
 
 # 1ノルムの計算
