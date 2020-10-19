@@ -121,7 +121,7 @@ double matrix_norm1(double **a, int m1, int m2, int n1, int n2)
 {
 	int i, j, tmp;
 	double *work, norm;
-	work = dvector(n1, n2);  /* �x�N�g��work[n1...n2] */
+	work = dvector(n1, n2);  /* ベクトル work[n1...n2] */
 
 	/* 列和の計算 */
 	for(j = n1; j <= n2; j++){
